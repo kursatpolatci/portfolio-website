@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-sans font-medium;
+}
+
+body.dark {
+  @apply bg-dark-primary;
+}
+
+body:not(.dark) {
+  @apply bg-light-primary;
+}
+
+.markdown {
+  @apply font-sans;
+}
+
+.markdown :is(h1, h2, h3, h4, h5, h6) {
+  @apply dark:text-dark-secondary text-light-secondary font-normal my-7;
+}
+
+.markdown h1 {
+  font-size: 1.25rem;
+}
+
+.markdown h2 {
+  font-size: 1.1rem;
+}
+
+.markdown h3 {
+  font-size: 1rem;
+}
+
+.markdown p {
+  @apply dark:text-[#D4D4D4] text-[#404040] font-light;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.markdown ul {
+  @apply dark:text-[#D4D4D4] text-[#404040] font-light;
+  margin: 0px 12px;
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+.markdown pre {
+  padding: 0rem;
+  border-radius: 1rem;
+  overflow-x: auto;
+}
+
+.markdown code {
+  @apply bg-[#ebebeb] dark:bg-[#171717];
+
+}
