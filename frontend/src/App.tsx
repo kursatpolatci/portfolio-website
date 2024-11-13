@@ -1,10 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import { ScrollToTop, Navbar, Footer } from "./components/index";
+import { Navbar, Footer } from "./components/index";
 import {
   HomePage,
-  BlogsPage,
   ProjectsPage,
-  BlogDetailPage
 } from "./pages/index";
 import { MainContext, Theme } from "./Context";
 import { useContext, useEffect, useState } from "react";
@@ -24,12 +22,9 @@ function App() {
   return (
     <MainContext.Provider value={{ theme, setTheme}}>
       <div className="max-w-3xl mx-auto">
-        <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/blog" element={<BlogsPage />} />
-          <Route path="/blog/:id" element={<BlogDetailPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
         </Routes>
         <Footer />

@@ -29,38 +29,6 @@ const Projects = () => {
         tags: ["C", "Tester", "MLX"],
         link: ""
       }
-    ],
-    "Web Projects": [
-      {
-        title: "Twitter Clone",
-        img: "/twitter.png",
-        desc: "Aliquam neque magna, commodo sed ornare ac, finibus a est. Morbi id eleifend turpis. Aliquam eu mi leo. Nam eget tortor eget nunc finibus auctor.",
-        tags: [
-          "Typescript",
-          "React",
-          "MongoDB",
-          "Node.js",
-          "Express.js",
-          "Tailwind CSS",
-          "NPM"
-        ],
-        link: ""
-      },
-      {
-        title: "Advanced Auth",
-        img: "/auth.png",
-        desc: "Mauris vel tincidunt sem. In id sagittis nisi. Morbi fringilla auctor molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;.",
-        tags: [
-          "Typescript",
-          "React",
-          "MongoDB",
-          "Node.js",
-          "Express.js",
-          "Docker",
-          ".NET Core"
-        ],
-        link: ""
-      }
     ]
   };
 

@@ -17,7 +17,6 @@ const Navbar = () => {
 
   const NavLinks: Links[] = [
     { to: "/", name: "Home", activeLink: handleActiveLink },
-    { to: "/blog", name: "Blog", activeLink: handleActiveLink },
     { to: "/projects", name: "Projects", activeLink: handleActiveLink }
   ];
   return (

@@ -39,23 +39,18 @@ body:not(.dark) {
 .markdown p {
   @apply dark:text-[#D4D4D4] text-[#404040] font-light;
   font-size: 1rem;
-  margin-bottom: 1rem;
+  margin: 1.75rem 0;
 }
 
 .markdown ul {
   @apply dark:text-[#D4D4D4] text-[#404040] font-light;
-  margin: 0px 12px;
+  margin: 1.75rem 12px;
   list-style-type: disc;
   padding-left: 1.5rem;
 }
 
-.markdown pre {
-  padding: 0rem;
-  border-radius: 1rem;
-  overflow-x: auto;
-}
-
 .markdown code {
   @apply bg-[#ebebeb] dark:bg-[#171717];
-
+  margin: 1.75rem 0rem;
+  border-radius: 1rem;
 }
