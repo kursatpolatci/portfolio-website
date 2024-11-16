@@ -11,8 +11,37 @@ export const getProjects = async (
   res: Response
 ): Promise<any> => {
   try {
-    const projects = await Project.find();
-    res.status(200).json({ success: true, projects });
+    const groupedProjects = await Project.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          projects: {
+            $push: {
+              _id: "$_id",
+              title: "$title",
+              description: "$description",
+              img: "$img",
+              tags: "$tags",
+              link: "$link",
+            },
+          },
+        },
+      },
+      {
+        $sort: {
+          _id: 1,
+        },
+      },
+      {
+        $project: {
+          category: "$_id",
+          _id: 0,
+          projects: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json({ success: true, projects: groupedProjects });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
@@ -20,8 +49,15 @@ export const getProjects = async (
 
 export const addProject = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { title, description, img, tags, link } = req.body;
-    if (!title || !description || !img || !tags || tags.length === 0) {
+    const { title, description, img, tags, link, category } = req.body;
+    if (
+      !title ||
+      !description ||
+      !img ||
+      !tags ||
+      tags.length === 0 ||
+      !category
+    ) {
       return res.status(400).json({
         success: false,
         message: "All fields are required, and tags cannot be empty.",
@@ -34,6 +70,7 @@ export const addProject = async (req: Request, res: Response): Promise<any> => {
       img: imgPath,
       tags: tags,
       link: link,
+      category: category,
     });
     await newProject.save();
     res.status(201).json({
@@ -51,7 +88,7 @@ export const editProject = async (
   res: Response
 ): Promise<any> => {
   try {
-    const { title, description, img, tags, link } = req.body;
+    const { title, description, img, tags, link, category } = req.body;
     const { id: projectId } = req.params;
     const project = await Project.findById(projectId);
     if (!project) {
@@ -67,6 +104,7 @@ export const editProject = async (
     }
     if (tags) project.tags = tags;
     if (link) project.link = link;
+    if (category) project.category = category;
     await project.save();
     res.status(200).json({
       success: true,

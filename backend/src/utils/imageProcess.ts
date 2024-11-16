@@ -1,6 +1,11 @@
 import * as fs from "fs";
 import path from "path";
-import { v4 as uuidv4 } from "uuid";
+
+const generateCustomId = ():string => {
+  const timeStamp = Date.now()
+  const randomPart = Math.floor(Math.random() * 10000)
+  return `${timeStamp}-${randomPart}`
+}
 
 const imageAddProcess = (
   imgBase64: string
@@ -8,7 +13,7 @@ const imageAddProcess = (
   return new Promise((resolve, reject) => {
     const imgBase64Data = imgBase64.replace(/^data:image\/\w+;base64,/, "");
     const imgBuffer = Buffer.from(imgBase64Data, "base64");
-    const uniqueName = `${uuidv4()}.jpg`;
+    const uniqueName = `${generateCustomId()}.jpg`;
     const filePath = path.join(__dirname, "..", "..", "uploads", uniqueName);
 
     fs.writeFile(filePath, imgBuffer, (err) => {

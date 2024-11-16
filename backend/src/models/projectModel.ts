@@ -6,6 +6,7 @@ interface IProject extends Document {
   img: string;
   tags: string[];
   link: string;
+  category: string;
 }
 
 const projectSchema = new mongoose.Schema<IProject>({
@@ -17,6 +18,7 @@ const projectSchema = new mongoose.Schema<IProject>({
     required: true,
   },
   link: { type: String, required: true },
+  category: { type: String, required: true },
 });
 
 const Project = mongoose.model<IProject>("Project", projectSchema);

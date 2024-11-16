@@ -3,15 +3,15 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { MainContext } from "../Context";
 
 const ThemeToggleButton = () => {
-  const {theme, setTheme} = useContext(MainContext)
+  const { theme, setTheme } = useContext(MainContext);
 
   const handleChangeTheme = () => {
     if (theme === "dark") {
-      setTheme("light")
+      setTheme("light");
     } else if (theme === "light") {
-      setTheme("dark")
+      setTheme("dark");
     }
-  }
+  };
   return (
     <button onClick={() => handleChangeTheme()}>
       {theme === "dark" ? (

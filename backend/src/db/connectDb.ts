@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
+import Intro from "../models/introModel";
 
-export const connectDb = async (): Promise<void> => {
+export const connectDb = async (): Promise<string> => {
     try {
         if (!process.env.MONGO_URI) {
             throw new Error("MONGO_URI is not defined in environment variables");
         }
         const conn = await mongoose.connect(process.env.MONGO_URI);
-        console.log(`MongoDB connected: ${conn.connection.host}`)
+        await Intro.ensureSingleDocument();
+        return conn.connection.host
     } catch (error) {
-        console.error(`Failed to connect to MongoDB: `, error)
+        return Promise.reject<string>(error)
     }
 }

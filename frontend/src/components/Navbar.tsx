@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import ThemeToggleButton from "./ThemeToggleButton";
 
 interface Links {
@@ -10,13 +10,24 @@ interface Links {
 
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState<string>("Home");
+  const location = useLocation()
 
   const handleActiveLink = (activeLink: string): void => {
     setActiveLink(activeLink);
   };
 
+  useEffect(() => {
+    if (location.pathname === "/")
+        setActiveLink("Home")
+    else if (location.pathname === "/about")
+        setActiveLink("About")
+    else if (location.pathname === "/projects")
+        setActiveLink("Projects")
+  }, [location])
+ 
   const NavLinks: Links[] = [
     { to: "/", name: "Home", activeLink: handleActiveLink },
+    { to: "/about", name: "About", activeLink: handleActiveLink },
     { to: "/projects", name: "Projects", activeLink: handleActiveLink }
   ];
   return (

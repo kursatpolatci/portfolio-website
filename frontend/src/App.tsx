@@ -1,11 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import { Navbar, Footer } from "./components/index";
+import { Navbar, Footer } from "./components/Index";
 import {
+  AboutPage,
   HomePage,
   ProjectsPage,
-} from "./pages/index";
+} from "./pages/Index.tsx";
 import { MainContext, Theme } from "./Context";
 import { useContext, useEffect, useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient()
 
 function App() {
   const { theme: mainTheme } = useContext(MainContext)
@@ -20,16 +24,19 @@ function App() {
     }
   }, [theme])
   return (
-    <MainContext.Provider value={{ theme, setTheme}}>
+    <QueryClientProvider client={queryClient}>
+      <MainContext.Provider value={{ theme, setTheme}}>
       <div className="max-w-3xl mx-auto">
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
         </Routes>
         <Footer />
       </div>
     </MainContext.Provider>
+    </QueryClientProvider>
   );
 }
 
