@@ -1,9 +1,10 @@
 import express from "express"
-import { getIntro } from "../controllers/introController"
+import { editIntro, getIntro } from "../controllers/introController"
+import { upload } from "../utils/multer"
 
 const router = express.Router()
 
 router.get("/", getIntro)
-// router.put("/update", )
+router.put("/edit", upload.fields([{name: "resume", maxCount: 1}, {name: "image", maxCount: 1}]), editIntro)
 
 export default router

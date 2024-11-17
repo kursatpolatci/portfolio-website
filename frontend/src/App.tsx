@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { Navbar, Footer } from "./components/Index";
 import {
   AboutPage,
-  HomePage,
+  IntroPage,
   ProjectsPage,
 } from "./pages/Index.tsx";
 import { MainContext, Theme } from "./Context";
@@ -29,7 +29,7 @@ function App() {
       <div className="max-w-3xl mx-auto">
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<IntroPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
         </Routes>

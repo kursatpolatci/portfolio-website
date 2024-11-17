@@ -8,7 +8,7 @@ interface IIntroSchema extends Document {
 }
 
 interface IIntroModel extends Model<IIntroSchema> {
-  ensureSingleDocument: () => Promise<void>;
+  ensureSingleDocument: () => Promise<IIntroSchema>;
 }
 
 const introSchema = new mongoose.Schema<IIntroSchema>({
@@ -31,7 +31,7 @@ const introSchema = new mongoose.Schema<IIntroSchema>({
 });
 
 const defaultData: Partial<IIntroSchema> = {
-  profileImg: "vesikalik.jpg",
+  profileImg: "image.jpg",
   fullName: "Kürşat Polatcı",
   summary: ["First sentence.", "Second sentence.", "Third sentence."],
   resume: "resume.pdf",
@@ -39,11 +39,11 @@ const defaultData: Partial<IIntroSchema> = {
 
 introSchema.statics.ensureSingleDocument = async function (
   this: Model<IIntroSchema>
-): Promise<void> {
+): Promise<IIntroSchema> {
   try {
     const existingDoc = await this.findOne({});
     if (!existingDoc) {
-      await this.create(defaultData);
+      return await this.create(defaultData);
     }
   } catch (error) {
     return Promise.reject(error);

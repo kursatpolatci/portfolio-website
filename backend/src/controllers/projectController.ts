@@ -4,7 +4,7 @@ import {
   imageAddProcess,
   imageDeleteProcess,
   imageEditProcess,
-} from "../utils/imageProcess";
+} from "../utils/base64";
 
 export const getProjects = async (
   req: Request,

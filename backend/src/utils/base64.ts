@@ -1,11 +1,11 @@
 import * as fs from "fs";
 import path from "path";
 
-const generateCustomId = ():string => {
-  const timeStamp = Date.now()
-  const randomPart = Math.floor(Math.random() * 10000)
-  return `${timeStamp}-${randomPart}`
-}
+const generateCustomId = (): string => {
+  const timeStamp = Date.now();
+  const randomPart = Math.floor(Math.random() * 10000);
+  return `${timeStamp}-${randomPart}`;
+};
 
 const imageAddProcess = (
   imgBase64: string
@@ -58,4 +58,9 @@ const imageEditProcess = (
       });
   });
 };
-export { imageAddProcess, imageDeleteProcess, imageEditProcess };
+export {
+  imageAddProcess,
+  imageDeleteProcess,
+  imageEditProcess,
+  generateCustomId,
+};

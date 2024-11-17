@@ -1,10 +1,10 @@
-import About from "../components/About"
+import Intro from "../components/Intro"
 import Contact from "../components/Contact"
 
 const HomePage = () => {
   return (
     <>
-        <About />
+        <Intro />
         <Contact />
     </>
   )

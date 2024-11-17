@@ -4,7 +4,7 @@ import {
   imageAddProcess,
   imageDeleteProcess,
   imageEditProcess,
-} from "../utils/imageProcess";
+} from "../utils/base64";
 
 export const getSkills = async (req: Request, res: Response): Promise<any> => {
   try {

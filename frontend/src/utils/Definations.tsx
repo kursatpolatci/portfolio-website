@@ -34,3 +34,8 @@ export interface IEmailData {
   email: string;
   message: string;
 }
+
+export interface IconLinks {
+  Icon: React.ComponentType<{ className: string; size: number }>;
+  to: string;
+}
