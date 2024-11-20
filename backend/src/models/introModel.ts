@@ -3,7 +3,7 @@ import mongoose, { Document, Model } from "mongoose";
 interface IIntroSchema extends Document {
   profileImg: string;
   fullName: string;
-  summary: string[];
+  summary: string;
   resume: string;
 }
 
@@ -12,41 +12,28 @@ interface IIntroModel extends Model<IIntroSchema> {
 }
 
 const introSchema = new mongoose.Schema<IIntroSchema>({
-  profileImg: {
-    type: String,
-    required: true,
-  },
-  fullName: {
-    type: String,
-    required: true,
-  },
-  summary: {
-    type: [String],
-    required: true,
-  },
-  resume: {
-    type: String,
-    required: true,
-  },
+  profileImg: { type: String, required: true },
+  fullName: { type: String, required: true },
+  summary: { type: String, required: true },
+  resume: { type: String, required: true },
 });
 
 const defaultData: Partial<IIntroSchema> = {
-  profileImg: "image.jpg",
+  profileImg: "profile.jpg",
   fullName: "Kürşat Polatcı",
-  summary: ["First sentence.", "Second sentence.", "Third sentence."],
+  summary:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi posuere dictum mi, ullamcorper convallis risus iaculis nec. Pellentesque consequat tortor a sodales tincidunt. Cras efficitur odio ut ipsum malesuada, et euismod nunc consequat. Nam aliquet fermentum mattis. Duis vestibulum feugiat.",
   resume: "resume.pdf",
 };
 
-introSchema.statics.ensureSingleDocument = async function (
-  this: Model<IIntroSchema>
-): Promise<IIntroSchema> {
+introSchema.statics.ensureSingleDocument = async function (this: Model<IIntroSchema>) : Promise<void>{
   try {
     const existingDoc = await this.findOne({});
     if (!existingDoc) {
-      return await this.create(defaultData);
+      await this.create(defaultData);
     }
   } catch (error) {
-    return Promise.reject(error);
+    throw error
   }
 };
 

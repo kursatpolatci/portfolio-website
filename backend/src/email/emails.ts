@@ -1,17 +1,15 @@
 import { Request, Response } from "express";
 import { transporter } from "./email.config";
+import { handleResponseError } from "../utils/error";
 
-export const sendMessage = async (
-  req: Request,
-  res: Response
-): Promise<any> => {
+export const sendMessage = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, email, message } = req.body;
 
-    if (!name || !email || !message)
-      return res
-        .status(400)
-        .json({ success: false, message: "All fields are required" });
+    if (!name || !email || !message) {
+      res.status(400).json({ success: false, message: "All fields are required" });
+      return;
+    }
 
     const mailOptions = {
       from: email,
@@ -21,10 +19,9 @@ export const sendMessage = async (
     };
 
     const result = await transporter.sendMail(mailOptions);
-    console.log("Email sent: ", result);
 
     res.status(200).json({ success: true, message: "Email sent successfully" });
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
+  } catch (error: unknown) {
+    handleResponseError(error, res);
   }
 };

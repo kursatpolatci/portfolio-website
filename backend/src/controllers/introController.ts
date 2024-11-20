@@ -1,22 +1,24 @@
 import { Request, Response } from "express";
 import Intro from "../models/introModel";
+import { handleResponseError } from "../utils/error";
 
-export const getIntro = async (req: Request, res: Response): Promise<any> => {
+export const getIntro = async (req: Request, res: Response): Promise<void> => {
   try {
     const intro = await Intro.findOne({});
 
     if (!intro) {
-      const defaultIntro = await Intro.ensureSingleDocument();
-      return res.status(200).json({ success: true, defaultIntro });
+      await Intro.ensureSingleDocument();
+      const defaultIntro = await Intro.findOne({})
+      res.status(200).json({ success: true, defaultIntro});
+      return;
     }
-
     res.status(200).json({ success: true, intro });
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
+  } catch (error: unknown) {
+    handleResponseError(error, res);
   }
 };
 
-export const editIntro = async (req: Request, res: Response): Promise<any> => {
+export const editIntro = async (req: Request, res: Response): Promise<void> => {
   try {
     const { fullName, summary } = req.body;
     const files = req.files as { [key: string]: Express.Multer.File[] };
@@ -24,10 +26,11 @@ export const editIntro = async (req: Request, res: Response): Promise<any> => {
     const resume = files["resume"] ? files["resume"][0] : null;
 
     const intro = await Intro.findOne({});
-    if (!intro)
-      return res
-        .status(404)
-        .json({ success: false, message: "Intro not found" });
+
+    if (!intro) {
+      res.status(404).json({ success: false, message: "Intro not found" });
+      return;
+    }
 
     if (fullName) intro.fullName = fullName;
     if (summary) intro.summary = summary;
@@ -35,10 +38,8 @@ export const editIntro = async (req: Request, res: Response): Promise<any> => {
     if (resume) intro.resume = resume.filename;
     await intro.save();
 
-    res
-      .status(200)
-      .json({ success: true, message: "Intro updated successfully", intro });
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
+    res.status(200).json({ success: true, message: "Intro updated successfully", intro });
+  } catch (error: unknown) {
+    handleResponseError(error, res);
   }
 };
