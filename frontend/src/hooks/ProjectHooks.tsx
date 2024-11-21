@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { API_URL } from "../utils/Definations";
+import { errorMessage } from "../utils/error";
+import { API_URL } from "../utils/types";
 
 export const useGetProjects = () => {
   return useQuery({
@@ -9,8 +10,8 @@ export const useGetProjects = () => {
       try {
         const res = await axios.get(`${API_URL}/project/all`);
         return res.data;
-      } catch (err) {
-        throw new Error(`ATTENTION: ${err}`);
+      } catch (error: unknown) {
+        throw errorMessage(error);
       }
     },
     refetchOnWindowFocus: true,

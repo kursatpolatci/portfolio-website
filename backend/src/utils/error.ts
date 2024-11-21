@@ -13,7 +13,7 @@ export class CustomError extends Error {
 export const handleResponseError = (error: unknown, res: Response): void => {
   if (error instanceof CustomError) res.status(error.statusCode).json({ success: false, message: error.message });
   else if (error instanceof Error) res.status(500).json({ success: false, message: error.message });
-  else res.status(500).json({ success: false, message: error });
+  else res.status(500).json({ success: false, message: "sa",error });
 };
 
 export const handleError = (error: unknown): void => {

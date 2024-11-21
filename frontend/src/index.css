@@ -16,7 +16,7 @@ body:not(.dark) {
   @apply bg-light-primary;
 }
 
-.markdown {
+/* .markdown {
   @apply font-sans;
 }
 
@@ -53,4 +53,4 @@ body:not(.dark) {
   @apply bg-[#ebebeb] dark:bg-[#171717];
   margin: 1.75rem 0rem;
   border-radius: 1rem;
-}
+} */

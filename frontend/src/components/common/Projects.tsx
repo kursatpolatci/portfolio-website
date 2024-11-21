@@ -1,40 +1,27 @@
 import { FaGithub, FaLink } from "react-icons/fa";
-import { useGetProjects } from "../hooks/ProjectHooks";
-import { BACKEND_URL, IProjects, IProject } from "../utils/Definations";
+import { useGetProjects } from "../../hooks/ProjectHooks";
 import { Link } from "react-router-dom";
+import { BACKEND_URL, IGroup } from "../../utils/types";
 
 const Projects = () => {
-  const { data, isLoading, isError } = useGetProjects();
-
-  const projects: IProjects[] = data?.projects;
-  if (isError || projects?.length === 0 || !projects) return <></>;
-  if (isLoading) return <></>;
+  const { data } = useGetProjects();
+  const projects = data?.projects;
   return (
     <div className="w-full py-12 flex flex-col gap-12">
-      {projects?.map((group, index) => {
+      {projects?.map((group: IGroup, index: number) => {
         return (
-          <div key={index} className="">
-            <h1 className="text-light-secondary dark:text-dark-secondary font-semibold text-2xl">
-              {group.category}
-            </h1>
+          <div key={index}>
+            <h1 className="text-light-secondary dark:text-dark-secondary font-semibold text-2xl">{group.category}</h1>
             <div className="flex flex-row gap-12 pt-4">
-              {group?.projects.map((project: IProject, index: number) => {
+              {group?.projects.map((project, index) => {
                 return (
-                  <Link to={project.link}>
-                    <div
-                      className="flex flex-col max-w-[23rem] cursor-pointer dark:hover:bg-[#18181a] hover:bg-[#fafafa] rounded-t-xl rounded-b-xl overflow-hidden transition-colors duration-300"
-                      key={index}
-                    >
+                  <Link to={project.link} key={index}>
+                    <div className="flex flex-col max-w-[23rem] cursor-pointer dark:hover:bg-[#18181a] hover:bg-[#fafafa] rounded-t-xl rounded-b-xl overflow-hidden transition-colors duration-300">
                       <div>
-                        <img
-                          src={`${BACKEND_URL}/uploads/${project.img}`}
-                          className="w-full h-auto"
-                        ></img>
+                        <img src={`${BACKEND_URL}/uploads/${project.img}`} className="w-full h-auto"></img>
                       </div>
                       <div className="p-4">
-                        <h1 className="dark:text-dark-secondary text-light-secondary text-xl">
-                          {project.title}
-                        </h1>
+                        <h1 className="dark:text-dark-secondary text-light-secondary text-xl">{project.title}</h1>
                         <p className="dark:text-dark-quaternary text-light-quaternary text-[0.8rem] pt-1">
                           {project.description}
                         </p>

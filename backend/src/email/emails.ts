@@ -10,7 +10,10 @@ export const sendMessage = async (req: Request, res: Response): Promise<void> =>
       res.status(400).json({ success: false, message: "All fields are required" });
       return;
     }
-
+    if (!process.env.MAIL_ADDRESS || !process.env.MAIL_PASSWORD) {
+      res.status(400).json({ success: false, message: "Mail address and password are required" });
+      return;
+    }
     const mailOptions = {
       from: email,
       to: process.env.MAIL_ADDRESS,
@@ -18,7 +21,7 @@ export const sendMessage = async (req: Request, res: Response): Promise<void> =>
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     };
 
-    const result = await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
 
     res.status(200).json({ success: true, message: "Email sent successfully" });
   } catch (error: unknown) {

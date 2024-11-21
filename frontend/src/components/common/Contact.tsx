@@ -1,44 +1,32 @@
 import { useState } from "react";
-import { useSendEmail } from "../hooks/EmailHooks";
-import { IEmailData } from "../utils/Definations";
+import { useSendEmail } from "../../hooks/EmailHooks";
+import { IEmailForm } from "../../utils/types";
 
 const Contact = () => {
-  const [formData, setFormData] = useState<IEmailData>({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState<IEmailForm>({ name: "", email: "", message: "" });
 
   const { mutateAsync, isPending } = useSendEmail();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const res = await mutateAsync(formData);
-    console.log(res)
-    setFormData({
-      name: "",
-      email: "",
-      message: "",
-    });
+    try {
+      e.preventDefault();
+      const res = await mutateAsync(formData);
+      console.log("Response in handleSubmit:", res);
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Error in handleSubmit: ", error);
+    }
   };
   return (
     <div className="py-6">
-      <h1 className="text-2xl text-light-secondary dark:text-dark-secondary mb-6">
-        Contact Me
-      </h1>
-      <form
-        className="flex flex-col gap-4 p-4"
-        onSubmit={(e) => handleSubmit(e)}
-      >
+      <h1 className="text-2xl text-light-secondary dark:text-dark-secondary mb-6">Contact Me</h1>
+      <form className="flex flex-col gap-4 p-4" onSubmit={(e) => handleSubmit(e)}>
         <div>
           <input
             type="text"
             name="name"
             value={formData.name}
             placeholder="Full Name"
-            onChange={(e) =>
-              setFormData({ ...formData, [e.target.name]: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
             className="focus:outline-none w-full px-4 py-3 rounded-md dark:bg-dark-fifth dark:placeholder-dark-tertiary dark:text-dark-tertiary bg-[#eeeeee] placeholder-light-tertiary text-light-tertiary placeholder:opacity-35"
           />
         </div>
@@ -48,9 +36,7 @@ const Contact = () => {
             name="email"
             value={formData.email}
             placeholder="Email Address"
-            onChange={(e) =>
-              setFormData({ ...formData, [e.target.name]: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
             className="focus:outline-none w-full px-4 py-3 rounded-md dark:bg-dark-fifth dark:placeholder-dark-tertiary dark:text-dark-tertiary bg-[#eeeeee] placeholder-light-tertiary text-light-tertiary placeholder:opacity-35"
           />
         </div>
@@ -59,9 +45,7 @@ const Contact = () => {
             name="message"
             value={formData.message}
             placeholder="Your Messages"
-            onChange={(e) =>
-              setFormData({ ...formData, [e.target.name]: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
             className="focus:outline-none w-full px-4 py-3 rounded-md dark:bg-dark-fifth dark:placeholder-dark-tertiary dark:text-dark-tertiary bg-[#eeeeee] placeholder-light-tertiary text-light-tertiary placeholder:opacity-35"
           />
         </div>
