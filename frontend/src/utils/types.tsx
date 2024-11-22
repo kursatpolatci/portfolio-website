@@ -29,19 +29,25 @@ export interface IGroup {
     img: string;
     tags: string[] | null;
     link: string;
+    category: string;
   }[];
 }
 
 export interface ISkill {
-    _id: string,
-    name: string,
-    img: string,
-    colorInvert: boolean
+  _id: string;
+  name: string;
+  img: string;
+  colorInvert: boolean;
 }
 
-export interface IEditFormData {
+export interface IEditIntroData {
   name: string | null;
   bio: string | null;
   image: File | null;
   resume: File | null;
+}
+
+export interface IEditSkillData {
+  name: string | null;
+  img: string | null;
 }

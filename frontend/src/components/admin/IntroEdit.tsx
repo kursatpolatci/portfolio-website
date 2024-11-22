@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useEditIntro, useGetIntro } from "../../hooks/IntroHooks";
-import { BACKEND_URL, IEditFormData } from "../../utils/types";
+import { BACKEND_URL, IEditIntroData } from "../../utils/types";
 import { datauri } from "../../utils/datauri";
 import { errorMessage } from "../../utils/error";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ const IntroEdit = () => {
   const { data } = useGetIntro();
   const { mutateAsync } = useEditIntro();
 
-  const [formData, setFormData] = useState<IEditFormData>({
+  const [formData, setFormData] = useState<IEditIntroData>({
     name: null,
     bio: null,
     image: null,

@@ -17,6 +17,7 @@ export const getProjects = async (req: Request, res: Response): Promise<void> =>
               img: "$img",
               tags: "$tags",
               link: "$link",
+              category: "$category"
             },
           },
         },
