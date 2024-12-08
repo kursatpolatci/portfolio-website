@@ -82,7 +82,7 @@ const IntroEdit = () => {
             onChange={(e) => handleChangeUpload(e, setProfileImgPreview)}
           />
           <button
-            className="dark:bg-dark-tertiary bg-gray-300 p-1 rounded-sm w-full"
+            className="dark:bg-dark-secondary bg-gray-300 p-1 rounded-sm w-full"
             onClick={(e) => handleClickUpload(e, profileImgRef)}
           >
             Upload Image
@@ -112,20 +112,7 @@ const IntroEdit = () => {
           />
         </div>
         {/* Upload Resume*/}
-        <div className="flex flex-col gap-3 pb-4 w-1/5">
-          <Link
-            target="_blank"
-            to={resumePreview ? `${resumePreview}` : `${BACKEND_URL}/uploads/${data?.intro.resume}`}
-            className={`${resumePreview ? "text-red-500" : "dark:text-dark-secondary text-light-secondary"}  underline`}
-          >
-            {data?.intro.resume}
-          </Link>
-          <button
-            className="dark:bg-dark-tertiary bg-gray-300 p-1 rounded-sm w-full"
-            onClick={(e) => handleClickUpload(e, resumeRef)}
-          >
-            Upload Resume
-          </button>
+        <div className="flex flex-row gap-3 pb-4 ">
           <input
             type="file"
             name="resume"
@@ -133,6 +120,19 @@ const IntroEdit = () => {
             ref={resumeRef}
             onChange={(e) => handleChangeUpload(e, setResumePreview)}
           />
+          <button
+            className="dark:bg-dark-secondary bg-gray-300 p-1 rounded-sm w-full"
+            onClick={(e) => handleClickUpload(e, resumeRef)}
+          >
+            Upload Resume
+          </button>
+          <Link
+            target="_blank"
+            to={resumePreview ? `${resumePreview}` : `${BACKEND_URL}/uploads/${data?.intro.resume}`}
+            className={`${resumePreview ? "text-red-500" : "dark:text-dark-secondary text-light-secondary"}  underline`}
+          >
+            {data?.intro.resume}
+          </Link>
         </div>
         <button className="bg-blue-400 p-2 mt-5 rounded-sm" type="submit">
           Update Intro

@@ -4,7 +4,7 @@ import { ILinks } from "../../utils/types";
 import ThemeToggleButton from "../common/ThemeToggleButton";
 import { TbLogout2 } from "react-icons/tb";
 
-const Sections = () => {
+const AdminNavbar = () => {
   const [activeLink, setActiveLink] = useState<string>("Intro");
   const location = useLocation();
 
@@ -61,4 +61,4 @@ const Sections = () => {
   );
 };
 
-export default Sections;
+export default AdminNavbar;

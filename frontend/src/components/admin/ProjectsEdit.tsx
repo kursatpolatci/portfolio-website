@@ -7,7 +7,7 @@ const ProjectsEdit = () => {
   const { data } = useGetProjects();
   return (
     <div className="py-12">
-      <button className="dark:bg-dark-tertiary bg-gray-300 px-3 py-1  rounded-sm">Add Project</button>
+      <button className="dark:bg-dark-secondary bg-gray-300 px-3 py-1  rounded-sm">Add Project</button>
 
       <div className="py-4 flex flex-col gap-5">
         {data?.projects.map((group: IGroup, index: number) => {

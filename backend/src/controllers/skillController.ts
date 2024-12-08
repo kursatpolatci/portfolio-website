@@ -45,7 +45,7 @@ export const editSkill = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id: skillId } = req.params;
     const { name, img, colorInvert } = req.body;
-
+    console.log(req.body)
     const skill = await Skill.findById(skillId);
     if (!skill) {
       res.status(404).json({ success: false, message: "Skill not found" });
@@ -57,7 +57,7 @@ export const editSkill = async (req: Request, res: Response): Promise<void> => {
       const imgPath = await imageEditProcess(img, skill.img);
       skill.img = imgPath;
     }
-    if (colorInvert) skill.colorInvert = colorInvert;
+    if (colorInvert !== undefined) skill.colorInvert = colorInvert;
 
     await skill.save();
     res.status(200).json({ success: true, message: "Skill updated successfully", skill });

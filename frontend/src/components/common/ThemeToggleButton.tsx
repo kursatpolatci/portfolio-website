@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { MainContext } from "../../Context";
+import { useThemeContext } from "../../ThemeContext";
 
 const ThemeToggleButton = () => {
-  const { theme, setTheme } = useContext(MainContext);
+  const { theme, setTheme } = useThemeContext();
 
   const handleChangeTheme = () => {
     if (theme === "dark") setTheme("light");

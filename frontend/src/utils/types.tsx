@@ -50,4 +50,6 @@ export interface IEditIntroData {
 export interface IEditSkillData {
   name: string | null;
   img: string | null;
+  colorInvert: boolean | null,
+  _id: string | null
 }

@@ -3,11 +3,11 @@ import dotenv from 'dotenv';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import { connectDb } from './db/connectDb';
-import { sendMessage } from './email/emails';
 import introRoutes from './routes/introRoutes';
 import projectRoutes from './routes/projectRoutes';
 import skillRoutes from './routes/skillRoutes';
+import { connectDb } from './db/connectDb';
+import { sendMessage } from './email/emails';
 import { handleError } from './utils/error';
 
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
