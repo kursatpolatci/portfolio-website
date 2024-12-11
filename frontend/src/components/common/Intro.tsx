@@ -1,10 +1,15 @@
 import { FaGithub, FaHackerrank, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useGetIntro } from "../../hooks/IntroHooks";
-import { BACKEND_URL, IIcons } from "../../utils/types";
+import { BACKEND_URL } from "../../lib/types/types";
+import { IconType } from "react-icons";
 
+interface IIcon {
+  Icon: IconType;
+  to: string;
+}
 const About = () => {
-  const icons: IIcons[] = [
+  const icons: IIcon[] = [
     { Icon: FaGithub, to: "/" },
     { Icon: FaHackerrank, to: "/" },
     { Icon: FaInstagram, to: "/" },

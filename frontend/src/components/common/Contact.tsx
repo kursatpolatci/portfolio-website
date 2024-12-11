@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSendEmail } from "../../hooks/EmailHooks";
-import { IEmailForm } from "../../utils/types";
+import { IEmailData } from "../../lib/types/types";
 
 const Contact = () => {
-  const [formData, setFormData] = useState<IEmailForm>({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState<IEmailData>({ name: "", email: "", message: "" });
 
   const { mutateAsync, isPending } = useSendEmail();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

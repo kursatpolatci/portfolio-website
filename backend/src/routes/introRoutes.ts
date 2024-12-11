@@ -1,10 +1,11 @@
 import express from "express";
 import { editIntro, getIntro } from "../controllers/introController";
-import { upload } from "../utils/multer";
+import { upload } from "../lib/utils/multer";
+import { authenticate } from "../middleware/authenticate";
 
 const router = express.Router();
 
 router.get("/", getIntro);
-router.put("/edit", upload, editIntro);
+router.put("/edit", authenticate, upload, editIntro);
 
 export default router;

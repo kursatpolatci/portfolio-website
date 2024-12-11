@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { ILinks } from "../../utils/types";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ILinks } from "../../lib/types/types";
 import ThemeToggleButton from "../common/ThemeToggleButton";
 import { TbLogout2 } from "react-icons/tb";
+import { useLogout } from "../../hooks/AuthHooks";
 
-const AdminNavbar = () => {
+const NavbarEdit = () => {
   const [activeLink, setActiveLink] = useState<string>("Intro");
   const location = useLocation();
+  const { mutateAsync: logout } = useLogout();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (location.pathname === "/admin") setActiveLink("Intro");
@@ -19,8 +22,14 @@ const AdminNavbar = () => {
     { to: "/admin-about", name: "About" },
     { to: "/admin-projects", name: "Projects" },
   ];
-  const handleLogout = () => {
-    window.location.href = "/";
+  const handleLogout = async (): Promise<void> => {
+    try {
+      const res = await logout();
+      console.log(res);
+      navigate("/")
+    } catch (error: unknown) {
+      console.error(`Èrror in handleLogout: `, error);
+    }
   };
   return (
     <div className="flex items-center justify-between gap-32 pt-12 px-5 lg:px-0">
@@ -61,4 +70,4 @@ const AdminNavbar = () => {
   );
 };
 
-export default AdminNavbar;
+export default NavbarEdit;

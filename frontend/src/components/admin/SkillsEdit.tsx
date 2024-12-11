@@ -1,34 +1,46 @@
 import { useState } from "react";
-import { useDeleteSkill, useEditSkill, useGetSkills } from "../../hooks/SkillHooks";
-import { BACKEND_URL, ISkill } from "../../utils/types";
+import { useAddSkill, useDeleteSkill, useEditSkill, useGetSkills } from "../../hooks/SkillHooks";
+import { BACKEND_URL, dialogType, ISkill } from "../../lib/types/types";
 import { MdDelete, MdModeEdit } from "react-icons/md";
-import { datauri } from "../../utils/datauri";
+import { datauri } from "../../lib/utils/datauri";
+import { IoMdCloseCircle } from "react-icons/io";
 
 const SkillsEdit = () => {
   const { data } = useGetSkills();
   const { mutateAsync: deleteSkill } = useDeleteSkill();
-  const { mutateAsync: editSkill} = useEditSkill()
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-
-  const [formData, setFormData] = useState({
+  const { mutateAsync: editSkill } = useEditSkill();
+  const { mutateAsync: addSkill } = useAddSkill();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [dialogType, setDialogType] = useState<dialogType>("add");
+  const [formData, setFormData] = useState<ISkill>({
     name: "",
     img: "",
     colorInvert: false,
-    _id: ""
+    _id: "",
   });
 
-  const handleClickEdit = (item: ISkill) => {
-    setFormData({
-      name: item.name,
-      img: "",
-      colorInvert: item.colorInvert,
-      _id: item._id
-    });
-    setIsEditDialogOpen((prev) => !prev);
+  const handleClickDialog = (type: dialogType, item?: ISkill) => {
+    if (type === "add")
+      setFormData({
+        name: "",
+        img: "",
+        colorInvert: false,
+      });
+    else if (type === "edit") {
+      if (item)
+        setFormData({
+          name: item.name,
+          img: "",
+          colorInvert: item.colorInvert,
+          _id: item._id,
+        });
+    }
+    setDialogType(type);
+    setIsDialogOpen((prev) => !prev);
   };
-  const handleChangeEdit = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeDialog = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
-      const { name, value, type, files, checked } = e.target;
+      const { name, value, files, type, checked } = e.target;
 
       if (type === "file") {
         if (files) {
@@ -37,18 +49,18 @@ const SkillsEdit = () => {
         }
       } else if (type === "checkbox") setFormData({ ...formData, [name]: checked });
       else setFormData({ ...formData, [name]: value });
-    } catch (error) {
-      console.error(`Error in handleChangeEdit: `, error);
+    } catch (error: unknown) {
+      console.error(`Error in handleChangeDialog: `, error);
     }
   };
-  const handleSubmitEdit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitDialog = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      const res = await editSkill(formData)
-      setIsEditDialogOpen((prev) => !prev)
-      console.log(res)
+      const res = dialogType === "add" ? await addSkill(formData) : await editSkill(formData);
+      console.log(res);
+      setIsDialogOpen((prev) => !prev);
     } catch (error: unknown) {
-      console.error(`Error in handleEditSubmit: `, error);
+      console.error(`Error in handleSubmitDialog: `, error);
     }
   };
   const handleDeleteSkill = async (id: string) => {
@@ -59,12 +71,18 @@ const SkillsEdit = () => {
       console.error(`Error in handleDeleteSkill: `, error);
     }
   };
-  console.log(formData)
   return (
     <div className="py-12">
       <div className="flex justify-between">
         <h1 className="dark:text-dark-secondary text-2xl">Skills</h1>
-        <button className="dark:bg-dark-secondary bg-gray-300 px-3  rounded-sm">Add Skill</button>
+        <button
+          className="dark:bg-dark-secondary bg-gray-300 px-3  rounded-sm"
+          onClick={() => {
+            handleClickDialog("add");
+          }}
+        >
+          Add Skill
+        </button>
       </div>
       <div className="flex flex-col gap-4 py-4">
         {data?.skills?.map((item: ISkill, index: number) => {
@@ -85,24 +103,32 @@ const SkillsEdit = () => {
                   className="text-blue-500 cursor-pointer"
                   size={24}
                   onClick={() => {
-                    handleClickEdit(item);
+                    handleClickDialog("edit", item);
                   }}
                 />
                 <MdDelete
                   className="text-red-500 cursor-pointer"
                   size={24}
                   onClick={() => {
-                    handleDeleteSkill(item._id);
+                    handleDeleteSkill(item._id!);
                   }}
                 />
               </div>
             </div>
           );
         })}
-        {isEditDialogOpen && (
+        {isDialogOpen && (
           <dialog open className="rounded-lg p-6 bg-white shadow-lg w-80 text-center">
-            <h2 className="text-lg font-bold mb-4">Edit Skill</h2>
-            <form className="flex flex-col gap-4" onSubmit={handleSubmitEdit}>
+            <IoMdCloseCircle
+              color="red"
+              size={24}
+              className=" absolute right-3 top-3 cursor-pointer"
+              onClick={() => {
+                setIsDialogOpen(false);
+              }}
+            />
+            <h2 className="text-lg font-bold mb-4">{dialogType === "add" ? "Add Skill" : "Edit Skill"}</h2>
+            <form className="flex flex-col gap-4" onSubmit={handleSubmitDialog}>
               {/* Skill Name */}
               <div className="flex">
                 <label htmlFor="name" className="mr-2 text-sm font-medium">
@@ -114,7 +140,7 @@ const SkillsEdit = () => {
                   name="name"
                   value={formData.name}
                   className="w-full p-2 border border-gray-300 rounded"
-                  onChange={handleChangeEdit}
+                  onChange={handleChangeDialog}
                 />
               </div>
               {/* Skill Image */}
@@ -122,7 +148,7 @@ const SkillsEdit = () => {
                 <label htmlFor="img" className="mr-2 text-sm font-medium">
                   Image:
                 </label>
-                <input type="file" id="img" name="img" className="w-full p-2" onChange={handleChangeEdit} />
+                <input type="file" id="img" name="img" className="w-full p-2" onChange={handleChangeDialog} />
               </div>
               {/* Color Invert */}
               <div className="flex items-center">
@@ -134,12 +160,12 @@ const SkillsEdit = () => {
                   id="colorInvert"
                   name="colorInvert"
                   checked={formData.colorInvert}
-                  onChange={handleChangeEdit}
+                  onChange={handleChangeDialog}
                 />
               </div>
               {/* Submit Button */}
-              <button className="dark:bg-dark-tertiary rounded p-2" type="submit">
-                Update Skill
+              <button className="dark:bg-blue-500 text-dark-secondary rounded p-2" type="submit">
+                {dialogType === "add" ? "Add New" : "Apply Changes"}
               </button>
             </form>
           </dialog>

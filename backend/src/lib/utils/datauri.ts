@@ -13,8 +13,7 @@ const imageAddProcess = (imgBase64: string): Promise<string> => {
     const imgBase64Data = imgBase64.replace(/^data:image\/\w+;base64,/, "");
     const imgBuffer = Buffer.from(imgBase64Data, "base64");
     const uniqueName = `${generateCustomId()}.jpg`;
-    const filePath = path.join(__dirname, "..", "..", "uploads", uniqueName);
-
+    const filePath = path.join(__dirname, "..", "..", "..", "uploads", uniqueName);
     fs.writeFile(filePath, imgBuffer, (err) => {
       if (err) reject(err);
       else resolve(uniqueName);
@@ -24,7 +23,7 @@ const imageAddProcess = (imgBase64: string): Promise<string> => {
 
 const imageDeleteProcess = (img: string): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const imgPath = path.join(__dirname, "..", "..", "uploads", img);
+    const imgPath = path.join(__dirname, "..", "..", "..", "uploads", img);
     if (fs.existsSync(imgPath)) {
       fs.unlinkSync(imgPath);
       resolve();

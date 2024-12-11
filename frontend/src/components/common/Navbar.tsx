@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ThemeToggleButton from "./ThemeToggleButton";
-import { ILinks } from "../../utils/types";
+import { ILinks } from "../../lib/types/types";
 import { GrUserAdmin } from "react-icons/gr";
 
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState<string>("Home");
   const location = useLocation();
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (location.pathname === "/") setActiveLink("Home");
     else if (location.pathname === "/about") setActiveLink("About");
@@ -20,7 +20,7 @@ const Navbar = () => {
     { to: "/projects", name: "Projects" },
   ];
   const handleLogin = () => {
-    window.location.href = "/admin";
+    navigate("/login");
   };
   return (
     <div className="flex items-center justify-between gap-32 pt-12 px-5 lg:px-0">

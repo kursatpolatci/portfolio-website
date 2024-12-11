@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { errorMessage } from "../utils/error";
-import { API_URL, IEditSkillData } from "../utils/types";
+import { errorMessage } from "../lib/utils/error";
+import { API_URL, ISkill } from "../lib/types/types";
 import toast from "react-hot-toast";
 
 export const useGetSkills = () => {
@@ -23,43 +23,64 @@ export const useGetSkills = () => {
 };
 
 export const useDeleteSkill = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
       try {
-        const res = await axios.delete(`${API_URL}/skill/delete/${id}`)
-        return res.data
+        const res = await axios.delete(`${API_URL}/skill/delete/${id}`);
+        return res.data;
       } catch (error: unknown) {
-        throw errorMessage(error)
+        throw errorMessage(error);
       }
     },
     onSuccess: (data) => {
-      toast.success(data.message)
-      queryClient.invalidateQueries({queryKey:["skills"]})
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["skills"] });
     },
     onError: (error: string) => {
-      toast.error(error)
-    }
-  })
-}
+      toast.error(error);
+    },
+  });
+};
 
 export const useEditSkill = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (editedData: IEditSkillData) => {
+    mutationFn: async (editedData: ISkill) => {
       try {
-        const res = await axios.put(`${API_URL}/skill/edit/${editedData._id}`, editedData)
-        return res.data
+        const res = await axios.put(`${API_URL}/skill/edit/${editedData._id}`, editedData);
+        return res.data;
       } catch (error: unknown) {
-        throw errorMessage(error)
+        throw errorMessage(error);
       }
     },
     onSuccess: (data) => {
-      toast.success(data.message)
-      queryClient.invalidateQueries({queryKey:["skills"]})
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["skills"] });
     },
     onError: (error: string) => {
-      toast.error(error)
-    }
-  })
-}
+      toast.error(error);
+    },
+  });
+};
+
+export const useAddSkill = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (addedData: ISkill) => {
+      try {
+        const res = await axios.post(`${API_URL}/skill/add`, addedData);
+        return res.data;
+      } catch (error: unknown) {
+        throw errorMessage(error);
+      }
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["skills"] });
+    },
+    onError: (error: string) => {
+      toast.error(error);
+    },
+  });
+};

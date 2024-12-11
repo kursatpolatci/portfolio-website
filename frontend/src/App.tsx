@@ -1,11 +1,11 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
-import { Navbar, Footer } from "./components/common/Components";
-import Sections from "./components/admin/AdminNavbar";
-import AdminPage from "./pages/AdminPage";
-import HomePage from "./pages/HomePage";
 import { ThemeProvider } from "./ThemeContext";
+import { HomePage, AdminPage } from "./pages/barrel";
+import { Navbar, Footer } from "./components/common";
+import { NavbarEdit } from "./components/admin";
+import Login from "./components/admin/Login";
 
 const queryClient = new QueryClient();
 
@@ -30,13 +30,14 @@ function App() {
                 }
               />
             ))}
+            <Route path="/login" element={<><Login/></>}/>
             {adminPaths?.map((path) => (
               <Route
                 key={path}
                 path={path}
                 element={
                   <>
-                    <Sections />
+                    <NavbarEdit />
                     <AdminPage path={path} />
                     <Footer />
                   </>

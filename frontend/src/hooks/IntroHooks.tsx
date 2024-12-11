@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { errorMessage } from "../utils/error";
-import { API_URL} from "../utils/types";
+import { errorMessage } from "../lib/utils/error";
+import { API_URL } from "../lib/types/types";
 import toast from "react-hot-toast";
 
 export const useGetIntro = () => {
@@ -23,7 +23,7 @@ export const useGetIntro = () => {
 };
 
 export const useEditIntro = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (formData: FormData) => {
       try {
@@ -35,7 +35,7 @@ export const useEditIntro = () => {
     },
     onSuccess: (data) => {
       toast.success(data?.message);
-      queryClient.invalidateQueries({queryKey: ["intro"]})
+      queryClient.invalidateQueries({ queryKey: ["intro"] });
     },
     onError: (error: string) => {
       toast.error(error);

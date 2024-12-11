@@ -1,4 +1,4 @@
-import { Contact, Intro, Projects, Skills } from "../components/common/Components";
+import { Contact, Intro, Projects, Skills } from "../components/common";
 
 interface IProps {
   path: string;

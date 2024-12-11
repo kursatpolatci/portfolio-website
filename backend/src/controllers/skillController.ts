@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Skill from "../models/skillModel";
-import { imageAddProcess, imageDeleteProcess, imageEditProcess } from "../utils/base64";
-import { handleResponseError } from "../utils/error";
+import { imageAddProcess, imageDeleteProcess, imageEditProcess } from "../lib/utils/datauri";
+import { handleResponseError } from "../lib/utils/error";
 
 export const getSkills = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -21,12 +21,10 @@ export const getSkills = async (req: Request, res: Response): Promise<void> => {
 export const addSkill = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, img, colorInvert } = req.body;
-
-    if (!name || !img || !colorInvert) {
+    if (!name || !img || colorInvert === undefined) {
       res.status(404).json({ success: false, message: "All fields are required." });
       return;
     }
-
     const imgPath = await imageAddProcess(img);
     const newSkill = new Skill({
       name: name,
@@ -45,7 +43,7 @@ export const editSkill = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id: skillId } = req.params;
     const { name, img, colorInvert } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     const skill = await Skill.findById(skillId);
     if (!skill) {
       res.status(404).json({ success: false, message: "Skill not found" });

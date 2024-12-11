@@ -1,19 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { useEditIntro, useGetIntro } from "../../hooks/IntroHooks";
-import { BACKEND_URL, IEditIntroData } from "../../utils/types";
-import { datauri } from "../../utils/datauri";
-import { errorMessage } from "../../utils/error";
+import { BACKEND_URL } from "../../lib/types/types";
+import { datauri } from "../../lib/utils/datauri";
+import { errorMessage } from "../../lib/utils/error";
 import { Link } from "react-router-dom";
 
 const IntroEdit = () => {
   const { data } = useGetIntro();
   const { mutateAsync } = useEditIntro();
-
-  const [formData, setFormData] = useState<IEditIntroData>({
-    name: null,
-    bio: null,
-    image: null,
-    resume: null,
+  
+  const [formData, setFormData] = useState({
+    name: "",
+    bio: "",
+    image: null as File | null,
+    resume: null as File | null,
   });
   const profileImgRef = useRef<HTMLInputElement | null>(null);
   const resumeRef = useRef<HTMLInputElement | null>(null);
@@ -134,7 +134,7 @@ const IntroEdit = () => {
             {data?.intro.resume}
           </Link>
         </div>
-        <button className="bg-blue-400 p-2 mt-5 rounded-sm" type="submit">
+        <button className="bg-blue-400 p-2 mt-5 rounded-sm dark:text-white" type="submit">
           Update Intro
         </button>
       </form>

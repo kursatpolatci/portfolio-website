@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Intro from "../models/introModel";
-import { handleResponseError } from "../utils/error";
+import { handleResponseError } from "../lib/utils/error";
 
 export const getIntro = async (req: Request, res: Response): Promise<void> => {
   try {

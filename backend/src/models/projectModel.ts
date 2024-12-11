@@ -18,6 +18,4 @@ const projectSchema = new mongoose.Schema<IProject>({
   category: { type: String, required: true },
 });
 
-const Project = mongoose.model<IProject>("Project", projectSchema);
-
-export default Project;
+export default mongoose.model<IProject>("Project", projectSchema);

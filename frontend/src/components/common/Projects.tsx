@@ -1,14 +1,14 @@
 import { FaGithub, FaLink } from "react-icons/fa";
 import { useGetProjects } from "../../hooks/ProjectHooks";
 import { Link } from "react-router-dom";
-import { BACKEND_URL, IGroup } from "../../utils/types";
+import { BACKEND_URL, IProjects } from "../../lib/types/types";
 
 const Projects = () => {
   const { data } = useGetProjects();
   const projects = data?.projects;
   return (
     <div className="w-full py-12 flex flex-col gap-12">
-      {projects?.map((group: IGroup, index: number) => {
+      {projects?.map((group: IProjects, index: number) => {
         return (
           <div key={index}>
             <h1 className="text-light-secondary dark:text-dark-secondary font-semibold text-2xl">{group.category}</h1>

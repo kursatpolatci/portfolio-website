@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Project from "../models/projectModel";
-import { imageAddProcess, imageDeleteProcess, imageEditProcess } from "../utils/base64";
-import { handleResponseError } from "../utils/error";
+import { imageAddProcess, imageDeleteProcess, imageEditProcess } from "../lib/utils/datauri";
+import { handleResponseError } from "../lib/utils/error";
 
 export const getProjects = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -17,7 +17,7 @@ export const getProjects = async (req: Request, res: Response): Promise<void> =>
               img: "$img",
               tags: "$tags",
               link: "$link",
-              category: "$category"
+              category: "$category",
             },
           },
         },

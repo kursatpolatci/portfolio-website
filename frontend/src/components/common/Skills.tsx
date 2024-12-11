@@ -1,5 +1,5 @@
 import { useGetSkills } from "../../hooks/SkillHooks";
-import { BACKEND_URL, ISkill } from "../../utils/types";
+import { BACKEND_URL, ISkill } from "../../lib/types/types";
 
 const Skills = () => {
   const { data } = useGetSkills();
