@@ -2,11 +2,7 @@ import IntroEdit from "../components/admin/IntroEdit";
 import ProjectsEdit from "../components/admin/ProjectsEdit";
 import SkillsEdit from "../components/admin/SkillsEdit";
 
-interface IProps {
-  path: string;
-}
-
-const AdminPage: React.FC<IProps> = ({ path }) => {
+const AdminPage: React.FC<{path: string}> = ({ path }) => {
   if (path === "/admin")
     return (
       <>

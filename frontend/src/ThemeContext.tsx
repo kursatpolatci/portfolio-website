@@ -8,18 +8,14 @@ interface IThemeContext {
 }
 
 const savedTheme = localStorage.getItem("theme");
-const defaultTheme: Theme = (savedTheme === "dark" || savedTheme === "light") ? savedTheme : "dark";
+const defaultTheme: Theme = savedTheme === "dark" || savedTheme === "light" ? savedTheme : "dark";
 
 const ThemeContext = createContext<IThemeContext>({
   theme: defaultTheme,
   setTheme: () => {},
 });
 
-interface IThemeProviderProps {
-  children: ReactNode;
-}
-
-export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(defaultTheme);
 
   useEffect(() => {

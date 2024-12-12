@@ -1,12 +1,10 @@
 import { Response } from "express";
-import { CustomError } from "./error";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 
 export const generateTokenAndSetCookie = async (res: Response, userId: string): Promise<void> => {
   try {
     const secret = process.env.JWT_SECRET;
-    if (!secret) throw new CustomError("No JWT_SECRET provided", 401);
+    if (!secret) throw new Error("No JWT_SECRET provided");
 
     const token = jwt.sign({ userId }, secret, {
       expiresIn: "15d",
@@ -18,6 +16,6 @@ export const generateTokenAndSetCookie = async (res: Response, userId: string): 
       secure: process.env.NODE_ENV !== "development",
     });
   } catch (error: unknown) {
-    throw error
+    throw error;
   }
 };

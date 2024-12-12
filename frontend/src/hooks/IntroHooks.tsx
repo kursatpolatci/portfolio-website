@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { errorMessage } from "../lib/utils/error";
 import { API_URL } from "../lib/types/types";
-import toast from "react-hot-toast";
 
 export const useGetIntro = () => {
   return useQuery({
@@ -15,10 +15,6 @@ export const useGetIntro = () => {
         throw errorMessage(error);
       }
     },
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
-    retry: 3,
-    refetchInterval: false,
   });
 };
 

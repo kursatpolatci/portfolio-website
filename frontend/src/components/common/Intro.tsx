@@ -4,19 +4,16 @@ import { useGetIntro } from "../../hooks/IntroHooks";
 import { BACKEND_URL } from "../../lib/types/types";
 import { IconType } from "react-icons";
 
-interface IIcon {
-  Icon: IconType;
-  to: string;
-}
-const About = () => {
-  const icons: IIcon[] = [
-    { Icon: FaGithub, to: "/" },
-    { Icon: FaHackerrank, to: "/" },
-    { Icon: FaInstagram, to: "/" },
-    { Icon: FaLinkedin, to: "/" },
+const Intro = () => {
+  const icons: { Icon: IconType; to: string }[] = [
+    { Icon: FaGithub, to: "https://github.com/kursatpolatci" },
+    { Icon: FaHackerrank, to: "https://www.hackerrank.com/profile/kursatpolatci" },
+    { Icon: FaInstagram, to: "https://www.instagram.com/kursatpolatci/" },
+    { Icon: FaLinkedin, to: "https://www.linkedin.com/in/kursatpolatci/" },
   ];
 
-  const { data } = useGetIntro();
+  const { data, isLoading } = useGetIntro();
+  if (isLoading) return <></>;
   return (
     <div className="py-12">
       <div className="w-32 h-32 overflow-hidden rounded-full group">
@@ -54,4 +51,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Intro;

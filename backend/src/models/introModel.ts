@@ -21,7 +21,7 @@ const introSchema = new mongoose.Schema<IIntro>({
 const defaultData: Partial<IIntro> = {
   image: "profile.jpg",
   name: "Kürşat Polatcı",
-  bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi posuere dictum mi, ullamcorper convallis risus iaculis nec. Pellentesque consequat tortor a sodales tincidunt. Cras efficitur odio ut ipsum malesuada, et euismod nunc consequat. Nam aliquet fermentum mattis. Duis vestibulum feugiat.",
+  bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   resume: "resume.pdf",
 };
 

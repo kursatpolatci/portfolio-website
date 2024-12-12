@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ILinks } from "../../lib/types/types";
 import ThemeToggleButton from "../common/ThemeToggleButton";
 import { TbLogout2 } from "react-icons/tb";
 import { useLogout } from "../../hooks/AuthHooks";
@@ -17,7 +16,7 @@ const NavbarEdit = () => {
     else if (location.pathname === "/admin-projects") setActiveLink("Projects");
   }, [location]);
 
-  const Links: ILinks[] = [
+  const Links: {to: string, name: string}[] = [
     { to: "/admin", name: "Intro" },
     { to: "/admin-about", name: "About" },
     { to: "/admin-projects", name: "Projects" },

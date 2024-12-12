@@ -17,7 +17,7 @@ const Contact = () => {
     }
   };
   return (
-    <div className="py-6">
+    <div>
       <h1 className="text-2xl text-light-secondary dark:text-dark-secondary mb-6">Contact Me</h1>
       <form className="flex flex-col gap-4 p-4" onSubmit={(e) => handleSubmit(e)}>
         <div>
@@ -49,7 +49,7 @@ const Contact = () => {
             className="focus:outline-none w-full px-4 py-3 rounded-md dark:bg-dark-fifth dark:placeholder-dark-tertiary dark:text-dark-tertiary bg-[#eeeeee] placeholder-light-tertiary text-light-tertiary placeholder:opacity-35"
           />
         </div>
-        <div>
+        <div className="flex gap-5 items-center">
           <button
             type="submit"
             className="flex items-center justify-center dark:bg-dark-secondary dark:text-dark-primary bg-light-quaternary text-light-primary text-nowrap rounded-md h-10 w-fit px-4"

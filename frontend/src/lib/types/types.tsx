@@ -10,11 +10,6 @@ export interface IEmailData {
   message: string;
 }
 
-export interface ILinks {
-  to: string;
-  name: string;
-}
-
 export interface IProject {
   _id?: string;
   title: string;

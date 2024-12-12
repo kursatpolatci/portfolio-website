@@ -45,3 +45,17 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
     handleResponseError(error, res);
   }
 };
+
+export const checkAuth = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userCollection = mongoose.connection.collection("users");
+    const user = await userCollection.findOne({});
+    if (!user) {
+      res.status(404).json({ success: false, message: "User not found" });
+      return;
+    }
+    res.status(200).json({ success: true, user });
+  } catch (error: unknown) {
+    handleResponseError(error, res);
+  }
+};

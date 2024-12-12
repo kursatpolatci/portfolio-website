@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import ThemeToggleButton from "./ThemeToggleButton";
-import { ILinks } from "../../lib/types/types";
-import { GrUserAdmin } from "react-icons/gr";
+import { MdDashboard } from "react-icons/md";
+import { ThemeToggleButton } from "./index";
 
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState<string>("Home");
   const location = useLocation();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (location.pathname === "/") setActiveLink("Home");
     else if (location.pathname === "/about") setActiveLink("About");
     else if (location.pathname === "/projects") setActiveLink("Projects");
   }, [location]);
 
-  const Links: ILinks[] = [
+  const Links: { to: string; name: string }[] = [
     { to: "/", name: "Home" },
     { to: "/about", name: "About" },
     { to: "/projects", name: "Projects" },
   ];
-  const handleLogin = () => {
-    navigate("/login");
+  const handleClickAdmin = () => {
+    navigate("/admin");
   };
   return (
     <div className="flex items-center justify-between gap-32 pt-12 px-5 lg:px-0">
@@ -50,10 +50,10 @@ const Navbar = () => {
         })}
       </div>
       <div className="flex gap-3">
-        <GrUserAdmin
+        <MdDashboard
           size={24}
-          onClick={handleLogin}
-          className="dark:text-dark-secondary text-light-secondary cursor-pointer"
+          onClick={handleClickAdmin}
+          className="dark:text-dark-secondary text-light-secondary cursor-pointer hover:scale-125 transition-all duration-300"
         />
         <ThemeToggleButton />
       </div>

@@ -1,55 +1,55 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "./ThemeContext";
 import { HomePage, AdminPage } from "./pages/barrel";
 import { Navbar, Footer } from "./components/common";
 import { NavbarEdit } from "./components/admin";
+import { useCheckAuth } from "./hooks/AuthHooks";
 import Login from "./components/admin/Login";
 
-const queryClient = new QueryClient();
-
 function App() {
-  const homePaths = ["/", "/about", "/projects"];
-  const adminPaths = ["/admin", "/admin-about", "/admin-projects"];
+  const { data: authUser, isLoading } = useCheckAuth();
+  if (isLoading) return <div className="dark:bg-dark-primary bg-light-primary" />;
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <div className="max-w-3xl mx-auto">
-          <Routes>
-            {homePaths?.map((path) => (
-              <Route
-                key={path}
-                path={path}
-                element={
-                  <>
-                    <Navbar />
-                    <HomePage path={path} />
-                    <Footer />
-                  </>
-                }
-              />
-            ))}
-            <Route path="/login" element={<><Login/></>}/>
-            {adminPaths?.map((path) => (
-              <Route
-                key={path}
-                path={path}
-                element={
+    <ThemeProvider>
+      <div className="max-w-3xl mx-auto">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          {["/", "/about", "/projects"]?.map((path) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <>
+                  <Navbar />
+                  <HomePage path={path} />
+                  <Footer />
+                </>
+              }
+            />
+          ))}
+          {["/admin", "/admin-about", "/admin-projects"]?.map((path) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                authUser ? (
                   <>
                     <NavbarEdit />
                     <AdminPage path={path} />
                     <Footer />
                   </>
-                }
-              />
-            ))}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </div>
-        <Toaster />
-      </ThemeProvider>
-    </QueryClientProvider>
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+          ))}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
+      <Toaster />
+    </ThemeProvider>
   );
 }
 

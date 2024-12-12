@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const IntroEdit = () => {
   const { data } = useGetIntro();
   const { mutateAsync } = useEditIntro();
-  
+
   const [formData, setFormData] = useState({
     name: "",
     bio: "",

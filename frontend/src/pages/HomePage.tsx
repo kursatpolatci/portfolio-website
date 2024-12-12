@@ -1,10 +1,6 @@
 import { Contact, Intro, Projects, Skills } from "../components/common";
 
-interface IProps {
-  path: string;
-}
-
-const HomePage: React.FC<IProps> = ({ path }) => {
+const HomePage: React.FC<{ path: string }> = ({ path }) => {
   if (path === "/")
     return (
       <>
