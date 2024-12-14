@@ -1,15 +1,14 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { API_URL } from "../lib/types/types";
+import { axiosInstance, ILoginFormData } from "../lib/types/types";
 import { errorMessage } from "../lib/utils/error";
 
 export const useLogin = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (formData: { username: string; password: string }) => {
+    mutationFn: async (formData: ILoginFormData) => {
       try {
-        const res = await axios.post(`${API_URL}/auth/login`, formData);
+        const res = await axiosInstance.post(`/auth/login`, formData);
         return res.data;
       } catch (error: unknown) {
         throw errorMessage(error);
@@ -17,7 +16,7 @@ export const useLogin = () => {
     },
     onSuccess: async (data) => {
       toast.success(data.message);
-      await queryClient.invalidateQueries({ queryKey: ["authUser"] });
+      queryClient.setQueryData(["authUser"], data);
     },
     onError: (error: string) => {
       toast.error(error);
@@ -30,7 +29,7 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: async () => {
       try {
-        const res = await axios.post(`${API_URL}/auth/logout`);
+        const res = await axiosInstance.post(`/auth/logout`);
         return res.data;
       } catch (error) {
         throw errorMessage(error);
@@ -39,7 +38,6 @@ export const useLogout = () => {
     onSuccess: async (data) => {
       toast.success(data.message);
       queryClient.setQueryData(["authUser"], null);
-      await queryClient.invalidateQueries({ queryKey: ["authUser"] });
     },
     onError: (error: string) => {
       toast.error(error);
@@ -52,12 +50,12 @@ export const useCheckAuth = () => {
     queryKey: ["authUser"],
     queryFn: async () => {
       try {
-        const res = await axios.get(`${API_URL}/auth/check-auth`);
+        const res = await axiosInstance.get(`/auth/check-auth`);
         return res.data;
       } catch (error) {
         throw errorMessage(error);
       }
     },
-    retry: false
+    retry: false,
   });
 };

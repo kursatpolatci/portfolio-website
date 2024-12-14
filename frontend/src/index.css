@@ -30,6 +30,10 @@ button.update {
   @apply bg-blue-400 text-white !important;
 }
 
+form {
+  @apply flex flex-col gap-4
+}
+
 dialog {
   @apply rounded-sm p-6 bg-dark-secondary shadow-2xl max-xs:mx-4;
 }
@@ -66,7 +70,7 @@ span.link {
 }
 
 .toggle-button {
-  @apply dark:text-white text-black size-6 max-md:size-5 max-sm:size-4 hover:scale-125 transition-transform cursor-pointer;
+  @apply dark:text-white text-black size-6 max-md:size-5 hover:scale-125 transition-transform cursor-pointer;
 }
 
 .tag {

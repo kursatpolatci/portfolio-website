@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAddSkill, useDeleteSkill, useEditSkill, useGetSkills } from "../../hooks/SkillHooks";
-import { BACKEND_URL, dialogType, ISkill } from "../../lib/types/types";
+import { BACKEND_URL, dialogType, ISkillFormData } from "../../lib/types/types";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import { datauri } from "../../lib/utils/datauri";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -12,28 +12,23 @@ const SkillsEdit = () => {
   const { mutateAsync: addSkill } = useAddSkill();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<dialogType>("add");
-  const [formData, setFormData] = useState<ISkill>({
+  const [formData, setFormData] = useState<ISkillFormData>({
+    _id: "",
     name: "",
     img: "",
     colorInvert: false,
-    _id: "",
   });
 
-  const handleClickDialog = (type: dialogType, item?: ISkill) => {
+  const handleClickDialog = (type: dialogType, item?: ISkillFormData) => {
     if (type === "add")
       setFormData({
+        _id: "",
         name: "",
         img: "",
         colorInvert: false,
       });
     else if (type === "edit") {
-      if (item)
-        setFormData({
-          name: item.name,
-          img: "",
-          colorInvert: item.colorInvert,
-          _id: item._id,
-        });
+      if (item) setFormData({ ...item, img: "" });
     }
     setDialogType(type);
     setIsDialogOpen((prev) => !prev);
@@ -57,7 +52,7 @@ const SkillsEdit = () => {
     try {
       e.preventDefault();
       const res = dialogType === "add" ? await addSkill(formData) : await editSkill(formData);
-      console.log(res);
+      console.log(`Result of handleSubmitDialog: `, res);
       setIsDialogOpen((prev) => !prev);
     } catch (error: unknown) {
       console.error(`Error in handleSubmitDialog: `, error);
@@ -73,7 +68,7 @@ const SkillsEdit = () => {
   };
   return (
     <div className="max-md:px-6">
-      <h1 className="dark:text-dark-secondary text-2xl max-md:text-xl pb-6">Skills</h1>
+      <h1 className="pb-3">Skills</h1>
       <button
         onClick={() => {
           handleClickDialog("add");
@@ -82,9 +77,9 @@ const SkillsEdit = () => {
         Add Skill
       </button>
       <div className="flex flex-col gap-4 py-6 p-4">
-        {data?.skills?.map((item: ISkill, index: number) => {
+        {data?.skills?.map((item: ISkillFormData, index: number) => {
           return (
-            <div key={index} className="border-dark-fifth flex flex-row p-3 items-center justify-start gap-4 relative">
+            <div key={index} className="flex flex-row p-3 items-center justify-start gap-4 relative">
               <img
                 src={`${BACKEND_URL}/uploads/${item.img}`}
                 alt={`photo`}
@@ -121,7 +116,7 @@ const SkillsEdit = () => {
               }}
             />
             <h2>{dialogType === "add" ? "Add Skill" : "Edit Skill"}</h2>
-            <form className="flex flex-col gap-4" onSubmit={handleSubmitDialog}>
+            <form onSubmit={handleSubmitDialog}>
               {/* Skill Name */}
               <div className="flex gap-2 items-center">
                 <label htmlFor="name">Name:</label>

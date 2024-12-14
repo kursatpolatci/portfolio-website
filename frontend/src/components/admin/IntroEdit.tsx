@@ -15,6 +15,7 @@ const IntroEdit = () => {
     image: null as File | null,
     resume: null as File | null,
   });
+
   const profileImgRef = useRef<HTMLInputElement>(null);
   const resumeRef = useRef<HTMLInputElement>(null);
 
@@ -31,7 +32,7 @@ const IntroEdit = () => {
       });
     }
   }, [data]);
-  
+
   const handleClickUpload = (e: React.MouseEvent<HTMLButtonElement>, ref: React.RefObject<HTMLInputElement>): void => {
     e.preventDefault();
     ref.current?.click();
@@ -55,7 +56,7 @@ const IntroEdit = () => {
     e.preventDefault();
     try {
       const multiPartForm = new FormData();
-      console.log(formData)
+      console.log(formData);
       Object.entries(formData).forEach(([key, value]) => {
         if (value) multiPartForm.append(key, value);
       });
@@ -67,9 +68,9 @@ const IntroEdit = () => {
   };
   return (
     <div className="max-md:px-6">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit}>
         {/* Upload Image*/}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           <img
             src={profileImgPreview ? `${profileImgPreview}` : `${BACKEND_URL}/uploads/${data?.intro.image}`}
             className="avatar"
@@ -81,16 +82,14 @@ const IntroEdit = () => {
             hidden
             onChange={(e) => handleChangeUpload(e, setProfileImgPreview)}
           />
-          <button onClick={(e) => handleClickUpload(e, profileImgRef)}>
-            Upload Image
-          </button>
+          <button onClick={(e) => handleClickUpload(e, profileImgRef)}>Upload Image</button>
         </div>
         {/* Name and Bio*/}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           <input
             name="name"
             placeholder="Full Name"
-            value={formData.name ?? ""}
+            value={formData.name || ""}
             onChange={(e) => {
               setFormData({ ...formData, name: e.target.value });
             }}
@@ -98,14 +97,14 @@ const IntroEdit = () => {
           <textarea
             name="bio"
             placeholder="Bio"
-            value={formData.bio ?? ""}
+            value={formData.bio || ""}
             onChange={(e) => {
               setFormData({ ...formData, bio: e.target.value });
             }}
           />
         </div>
         {/* Upload Resume*/}
-        <div className="flex flex-row gap-3">
+        <div className="flex flex-row gap-4">
           <input
             type="file"
             name="resume"

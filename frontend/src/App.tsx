@@ -6,6 +6,7 @@ import { useCheckAuth } from "./hooks/AuthHooks";
 
 function App() {
   const { data: authUser, isLoading } = useCheckAuth();
+
   if (isLoading) return <div className="dark:bg-dark-primary bg-light-primary" />;
   return (
     <ThemeProvider>
@@ -17,7 +18,7 @@ function App() {
           {["/admin", "/admin-about", "/admin-projects"]?.map((path) => (
             <Route key={path} path={path} element={authUser ? <AdminPage path={path} /> : <Navigate to="/login" />} />
           ))}
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={authUser ? <Navigate to="/admin" replace /> : <LoginPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

@@ -1,14 +1,13 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
+import { axiosInstance, IEmailFormData } from "../lib/types/types";
 import { errorMessage } from "../lib/utils/error";
-import { API_URL, IEmailData } from "../lib/types/types";
 
 export const useSendEmail = () => {
   return useMutation({
-    mutationFn: async (formData: IEmailData) => {
+    mutationFn: async (formData: IEmailFormData) => {
       try {
-        const res = await axios.post(`${API_URL}/contact`, formData);
+        const res = await axiosInstance.post(`/contact`, formData);
         return res.data;
       } catch (error: unknown) {
         throw errorMessage(error);

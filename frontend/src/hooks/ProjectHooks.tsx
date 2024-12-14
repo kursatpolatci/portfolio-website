@@ -1,24 +1,19 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { errorMessage } from "../lib/utils/error";
-import { API_URL, IProject } from "../lib/types/types";
 import toast from "react-hot-toast";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { errorMessage } from "../lib/utils/error";
+import { axiosInstance, IProjectFormData } from "../lib/types/types";
 
 export const useGetProjects = () => {
   return useQuery({
     queryKey: ["projects"],
     queryFn: async () => {
       try {
-        const res = await axios.get(`${API_URL}/project/all`);
+        const res = await axiosInstance.get(`/project/all`);
         return res.data;
       } catch (error: unknown) {
         throw errorMessage(error);
       }
     },
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
-    retry: 3,
-    refetchInterval: false,
   });
 };
 
@@ -27,7 +22,7 @@ export const useDeleteProject = () => {
   return useMutation({
     mutationFn: async (_id: string) => {
       try {
-        const res = await axios.delete(`${API_URL}/project/delete/${_id}`);
+        const res = await axiosInstance.delete(`/project/delete/${_id}`);
         return res.data;
       } catch (error: unknown) {
         throw errorMessage(error);
@@ -35,7 +30,7 @@ export const useDeleteProject = () => {
     },
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.setQueryData(["projects"], data);
     },
     onError: (error: string) => {
       toast.error(error);
@@ -46,9 +41,9 @@ export const useDeleteProject = () => {
 export const useEditProject = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (editedProject: IProject) => {
+    mutationFn: async (editedProject: IProjectFormData) => {
       try {
-        const res = await axios.put(`${API_URL}/project/edit/${editedProject._id}`, editedProject );
+        const res = await axiosInstance.put(`/project/edit/${editedProject._id}`, editedProject);
         return res.data;
       } catch (error: unknown) {
         throw errorMessage(error);
@@ -56,7 +51,7 @@ export const useEditProject = () => {
     },
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.setQueryData(["projects"], data);
     },
     onError: (error: string) => {
       toast.error(error);
@@ -67,9 +62,9 @@ export const useEditProject = () => {
 export const useAddProject = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (addedProject: IProject) => {
+    mutationFn: async (addedProject: IProjectFormData) => {
       try {
-        const res = await axios.post(`${API_URL}/project/add`, addedProject);
+        const res = await axiosInstance.post(`/project/add`, addedProject);
         return res.data;
       } catch (error: unknown) {
         throw errorMessage(error);
@@ -77,7 +72,7 @@ export const useAddProject = () => {
     },
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.setQueryData(["projects"], data);
     },
     onError: (error: string) => {
       toast.error(error);

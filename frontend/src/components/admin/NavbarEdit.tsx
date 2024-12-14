@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import ThemeToggleButton from "../common/ThemeToggleButton";
+import { ThemeToggleButton } from "../common/index";
 import { useLogout } from "../../hooks/AuthHooks";
 import { GoHome } from "react-icons/go";
 import { TbLogout2 } from "react-icons/tb";
+
 const NavbarEdit = () => {
   const [activeLink, setActiveLink] = useState<string>("Intro");
   const location = useLocation();

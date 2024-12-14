@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAddProject, useDeleteProject, useEditProject, useGetProjects } from "../../hooks/ProjectHooks";
-import { BACKEND_URL, dialogType, IProject, IProjects } from "../../lib/types/types";
+import { BACKEND_URL, dialogType, IProjectFormData, IProjects } from "../../lib/types/types";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import { useRef, useState } from "react";
 import { datauri } from "../../lib/utils/datauri";
@@ -15,7 +15,8 @@ const ProjectsEdit = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<dialogType>("add");
   const addTagRef = useRef<HTMLInputElement>(null);
-  const [formData, setFormData] = useState<IProject>({
+  const [formData, setFormData] = useState<IProjectFormData>({
+    _id: "",
     title: "",
     description: "",
     img: "",
@@ -24,9 +25,10 @@ const ProjectsEdit = () => {
     category: "",
   });
 
-  const handleClickDialog = (type: dialogType, item?: IProject) => {
+  const handleClickDialog = (type: dialogType, item?: IProjectFormData) => {
     if (type === "add") {
       setFormData({
+        _id: "",
         title: "",
         description: "",
         img: "",
@@ -35,17 +37,7 @@ const ProjectsEdit = () => {
         category: "",
       });
     } else if (type === "edit") {
-      if (item) {
-        setFormData({
-          title: item.title,
-          description: item.description,
-          img: "",
-          tags: item.tags,
-          link: item.link,
-          category: item.category,
-          _id: item._id,
-        });
-      }
+      if (item) setFormData({ ...item, img: "" });
     }
     setDialogType(type);
     setIsDialogOpen((prev) => !prev);
@@ -67,7 +59,7 @@ const ProjectsEdit = () => {
     try {
       e.preventDefault();
       const res = dialogType === "add" ? await addProject(formData) : await editProject(formData);
-      console.log(res);
+      console.log(`Result of handleSubmitDialog: `, res);
       setIsDialogOpen((prev) => !prev);
     } catch (error) {
       console.error(`Error in handleSubmitDialog: `, error);
@@ -83,7 +75,7 @@ const ProjectsEdit = () => {
   };
   return (
     <div className="max-md:px-6">
-      <h1 className="dark:text-dark-secondary text-2xl max-md:text-xl pb-6">Projects</h1>
+      <h1 className="pb-3">Projects</h1>
       <button
         onClick={() => {
           handleClickDialog("add");
@@ -97,7 +89,7 @@ const ProjectsEdit = () => {
             <div key={index} className="p-4">
               <h1>{group.category}</h1>
               <div className="flex flex-col gap-6 px-4 py-3">
-                {group.projects.map((project: IProject, index) => {
+                {group.projects.map((project: IProjectFormData, index) => {
                   return (
                     <div
                       key={index}
@@ -159,7 +151,7 @@ const ProjectsEdit = () => {
               }}
             />
             <h2>{dialogType === "add" ? "Add Project" : "Edit Project"}</h2>
-            <form className="flex flex-col gap-4" onSubmit={handleSubmitDialog}>
+            <form onSubmit={handleSubmitDialog}>
               {/* Title */}
               <div className="flex gap-2 items-center">
                 <label htmlFor="title">Title:</label>

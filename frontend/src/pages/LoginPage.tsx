@@ -31,7 +31,7 @@ const LoginPage = () => {
           <ThemeToggleButton />
           <h1>Kürşat Polatcı </h1>
         </div>
-        <form className="flex flex-col gap-3 p-4" onSubmit={handleSubmitLogin}>
+        <form onSubmit={handleSubmitLogin}>
           <div>
             <input
               type="text"

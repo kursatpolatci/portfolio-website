@@ -1,7 +1,7 @@
 import { FaGithub, FaLink } from "react-icons/fa";
 import { useGetProjects } from "../../hooks/ProjectHooks";
 import { Link } from "react-router-dom";
-import { BACKEND_URL, IProjects } from "../../lib/types/types";
+import { BACKEND_URL, IProjectFormData, IProjects } from "../../lib/types/types";
 
 const Projects = () => {
   const { data, isLoading } = useGetProjects();
@@ -14,7 +14,7 @@ const Projects = () => {
             <div key={index}>
               <h1>{group.category}</h1>
               <div className="grid grid-cols-2 max-xs:grid-cols-1 gap-12 max-md:gap-8 p-4">
-                {group?.projects.map((project, index) => {
+                {group?.projects.map((project: IProjectFormData, index) => {
                   return (
                     <Link to={project.link} key={index}>
                       <div className="flex flex-col  cursor-pointer dark:hover:bg-[#18181a] hover:bg-[#fafafa] rounded-t-xl rounded-b-xl overflow-hidden transition-colors duration-300">
