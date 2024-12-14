@@ -72,32 +72,25 @@ const SkillsEdit = () => {
     }
   };
   return (
-    <div className="py-12">
-      <div className="flex justify-between">
-        <h1 className="dark:text-dark-secondary text-2xl">Skills</h1>
-        <button
-          className="dark:bg-dark-secondary bg-gray-300 px-3  rounded-sm"
-          onClick={() => {
-            handleClickDialog("add");
-          }}
-        >
-          Add Skill
-        </button>
-      </div>
-      <div className="flex flex-col gap-4 py-4">
+    <div className="max-md:px-6">
+      <h1 className="dark:text-dark-secondary text-2xl max-md:text-xl pb-6">Skills</h1>
+      <button
+        onClick={() => {
+          handleClickDialog("add");
+        }}
+      >
+        Add Skill
+      </button>
+      <div className="flex flex-col gap-4 py-6 p-4">
         {data?.skills?.map((item: ISkill, index: number) => {
           return (
             <div key={index} className="border-dark-fifth flex flex-row p-3 items-center justify-start gap-4 relative">
-              <div>
-                <img
-                  src={`${BACKEND_URL}/uploads/${item.img}`}
-                  alt={`photo`}
-                  className={`w-12 h-12 object-contain ${item.colorInvert ? "dark:invert" : ""}`}
-                />
-              </div>
-              <div>
-                <p className="text-light-secondary dark:text-dark-tertiary">{item.name}</p>
-              </div>
+              <img
+                src={`${BACKEND_URL}/uploads/${item.img}`}
+                alt={`photo`}
+                className={`w-12 max-md:w-11 object-contain ${item.colorInvert ? "dark:invert" : ""}`}
+              />
+              <p>{item.name}</p>
               <div className="flex flex-col justify-between absolute top-0 right-0 h-full py-2">
                 <MdModeEdit
                   className="text-blue-500 cursor-pointer"
@@ -118,7 +111,7 @@ const SkillsEdit = () => {
           );
         })}
         {isDialogOpen && (
-          <dialog open className="rounded-lg p-6 bg-white shadow-lg w-80 text-center">
+          <dialog open>
             <IoMdCloseCircle
               color="red"
               size={24}
@@ -127,46 +120,39 @@ const SkillsEdit = () => {
                 setIsDialogOpen(false);
               }}
             />
-            <h2 className="text-lg font-bold mb-4">{dialogType === "add" ? "Add Skill" : "Edit Skill"}</h2>
+            <h2>{dialogType === "add" ? "Add Skill" : "Edit Skill"}</h2>
             <form className="flex flex-col gap-4" onSubmit={handleSubmitDialog}>
               {/* Skill Name */}
-              <div className="flex">
-                <label htmlFor="name" className="mr-2 text-sm font-medium">
-                  Name:
-                </label>
+              <div className="flex gap-2 items-center">
+                <label htmlFor="name">Name:</label>
                 <input
                   type="text"
                   id="name"
                   name="name"
+                  placeholder="Skill name"
                   value={formData.name}
-                  className="w-full p-2 border border-gray-300 rounded"
                   onChange={handleChangeDialog}
                 />
               </div>
               {/* Skill Image */}
-              <div className="flex">
-                <label htmlFor="img" className="mr-2 text-sm font-medium">
-                  Image:
-                </label>
-                <input type="file" id="img" name="img" className="w-full p-2" onChange={handleChangeDialog} />
+              <div className="flex gap-2 items-center">
+                <label htmlFor="img">Image:</label>
+                <input type="file" id="img" name="img" onChange={handleChangeDialog} />
               </div>
               {/* Color Invert */}
-              <div className="flex items-center">
-                <label htmlFor="colorInvert" className="mr-2 text-sm font-medium">
-                  Color Invert:
-                </label>
+              <div className="flex gap-2 items-center">
+                <label htmlFor="colorInvert">Color Invert:</label>
                 <input
                   type="checkbox"
                   id="colorInvert"
                   name="colorInvert"
                   checked={formData.colorInvert}
                   onChange={handleChangeDialog}
+                  className="w-auto"
                 />
               </div>
               {/* Submit Button */}
-              <button className="dark:bg-blue-500 text-dark-secondary rounded p-2" type="submit">
-                {dialogType === "add" ? "Add New" : "Apply Changes"}
-              </button>
+              <button className="update">{dialogType === "add" ? "Add New" : "Apply Changes"}</button>
             </form>
           </dialog>
         )}

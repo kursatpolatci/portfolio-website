@@ -82,180 +82,33 @@ const ProjectsEdit = () => {
     }
   };
   return (
-    <div className="py-12">
+    <div className="max-md:px-6">
+      <h1 className="dark:text-dark-secondary text-2xl max-md:text-xl pb-6">Projects</h1>
       <button
-        className="dark:bg-dark-secondary bg-gray-300 px-3 py-1 rounded-sm"
         onClick={() => {
           handleClickDialog("add");
         }}
       >
         Add Project
       </button>
-      {isDialogOpen && (
-        <dialog open className="rounded-lg p-6 bg-white shadow-lg min-w-80 text-center z-10">
-          <IoMdCloseCircle color="red" size={24} className=" absolute right-3 top-3 cursor-pointer" onClick={() => {
-            setIsDialogOpen(false)
-          }}/>
-          <h2 className="text-lg font-bold mb-4">{dialogType === "add" ? "Add Project" : "Edit Project"}</h2>
-          <form className="flex flex-col gap-4" onSubmit={handleSubmitDialog}>
-            {/* Title */}
-            <div className="flex gap-2">
-              <label htmlFor="title" className="text-sm font-medium">
-                Title:
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                value={formData.title}
-                className="w-full p-2 border border-gray-300 rounded"
-                onChange={(e) => {
-                  handleChangeDialog(e);
-                }}
-              />
-            </div>
-            {/* Description */}
-            <div className="flex gap-2">
-              <label htmlFor="description" className="text-sm font-medium">
-                Description:
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                className="w-full p-2 border border-gray-300 rounded"
-                onChange={(e) => {
-                  handleChangeDialog(e);
-                }}
-              />
-            </div>
-            {/* Image */}
-            <div className="flex gap-2">
-              <label htmlFor="img" className="font-medium text-sm">
-                Image:
-              </label>
-              <input
-                type="file"
-                id="img"
-                name="img"
-                className="w-full"
-                onChange={(e) => {
-                  handleChangeDialog(e);
-                }}
-              />
-            </div>
-            {/* Tags */}
-            <div className="flex flex-col gap-3">
-              <div className="flex gap-2 items-center">
-                <label htmlFor="tags" className="font-medium text-sm">
-                  Tags:
-                </label>
-                <div className="pt-2 flex flex-row flex-wrap gap-1">
-                  {formData.tags.map((item, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="dark:text-dark-tertiary dark:bg-dark-fifth text-light-tertiary bg-[#F4F5F5] inline-block p-1 rounded-xl"
-                      >
-                        <p className="text-[0.7rem]">{item}</p>
-                        <IoClose color="red" className="cursor-pointer" onClick={() => {
-                          setFormData({...formData, tags: formData.tags.filter(i => i != item)})
-                        }}/>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="text"
-                  id="tags"
-                  name="tags"
-                  placeholder="new tag"
-                  className=" p-2 border border-gray-300 w-2/3"
-                  ref={addTagRef}
-                />
-                <button
-                  className="w-1/3 dark:bg-gray-300 p-2 rounded"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (addTagRef.current) {
-                      setFormData({ ...formData, tags: [...formData.tags, addTagRef.current.value] });
-                      addTagRef.current.value = "";
-                    }
-                  }}
-                >
-                  Add
-                </button>
-              </div>
-            </div>
-            {/* Link */}
-            <div className="flex gap-2">
-              <label htmlFor="link" className="font-medium text-sm">
-                Link:
-              </label>
-              <input
-                id="link"
-                name="link"
-                value={formData.link}
-                className="w-full p-2 border border-gray-300"
-                onChange={(e) => {
-                  handleChangeDialog(e);
-                }}
-              />
-            </div>
-            {/* Category */}
-            <div className="flex gap-2">
-              <label htmlFor="category" className="font-medium text-sm">
-                Category:
-              </label>
-              <input
-                id="category"
-                name="category"
-                value={formData.category}
-                className="w-full p-2 border border-gray-300"
-                onChange={(e) => {
-                  handleChangeDialog(e);
-                }}
-              />
-            </div>
-            <button className="dark:bg-blue-500 text-dark-secondary rounded p-2" type="submit">
-              {dialogType === "add" ? "Add New" : "Apply Changes"}
-            </button>
-          </form>
-        </dialog>
-      )}
-      <div className="py-4 flex flex-col gap-5">
+      <div className="flex flex-col gap-6 py-6">
         {data?.projects.map((group: IProjects, index: number) => {
           return (
-            <div key={index}>
-              <h1 className="text-light-secondary dark:text-dark-secondary font-semibold text-2xl">{group.category}</h1>
+            <div key={index} className="p-4">
+              <h1>{group.category}</h1>
               <div className="flex flex-col gap-6 px-4 py-3">
                 {group.projects.map((project: IProject, index) => {
                   return (
-                    <div key={index} className="flex flex-row-reverse justify-end gap-12">
-                      <div>
-                        <p className="dark:text-dark-tertiary">{project.title}</p>
-                        <p className="dark:text-dark-tertiary">{project.description}</p>
-                        <Link to={project.link} className="dark:text-dark-tertiary underline">
-                          {project.link}
-                        </Link>
-                        <div className="pt-2 flex flex-row flex-wrap gap-1">
-                          {project.tags?.map((item, index) => {
-                            return (
-                              <div
-                                key={index}
-                                className="dark:text-dark-tertiary dark:bg-dark-fifth text-light-tertiary bg-[#F4F5F5] inline-block p-1 rounded-xl"
-                              >
-                                <p className="text-[0.7rem]">{item}</p>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                      <div className="flex gap-5">
-                        <img src={`${BACKEND_URL}/uploads/${project.img}`} className="w-64 rounded-md" />
-                        <div className="flex flex-col items-center justify-center gap-4">
+                    <div
+                      key={index}
+                      className="flex max-md:flex-col items-center max-md:items-start gap-12 max-md:gap-3"
+                    >
+                      <div className="flex max-md:flex-col w-1/3 max-md:w-full gap-2 ">
+                        <img
+                          src={`${BACKEND_URL}/uploads/${project.img}`}
+                          className="w-full h-auto max-md:h-auto rounded-md"
+                        />
+                        <div className="flex flex-col max-md:flex-row items-center justify-center gap-2">
                           <MdModeEdit
                             className="text-blue-500 cursor-pointer"
                             size={24}
@@ -272,6 +125,22 @@ const ProjectsEdit = () => {
                           />
                         </div>
                       </div>
+                      <div className="flex flex-col w-2/3 max-md:w-full max-md:items-center gap-1 max-md:gap-1 overflow-hidden">
+                        <p>{project.title}</p>
+                        <p>{project.description}</p>
+                        <Link to={project.link}>
+                          <span className="link">{project.link}</span>
+                        </Link>
+                        <div className="flex flex-row flex-wrap gap-1 py-1">
+                          {project.tags?.map((item, index) => {
+                            return (
+                              <div key={index} className="tag">
+                                <p className="text-[0.7rem]">{item}</p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
@@ -279,6 +148,124 @@ const ProjectsEdit = () => {
             </div>
           );
         })}
+        {isDialogOpen && (
+          <dialog open>
+            <IoMdCloseCircle
+              color="red"
+              size={24}
+              className=" absolute right-3 top-3 cursor-pointer"
+              onClick={() => {
+                setIsDialogOpen(false);
+              }}
+            />
+            <h2>{dialogType === "add" ? "Add Project" : "Edit Project"}</h2>
+            <form className="flex flex-col gap-4" onSubmit={handleSubmitDialog}>
+              {/* Title */}
+              <div className="flex gap-2 items-center">
+                <label htmlFor="title">Title:</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  value={formData.title}
+                  onChange={(e) => {
+                    handleChangeDialog(e);
+                  }}
+                />
+              </div>
+              {/* Description */}
+              <div className="flex gap-2 items-center">
+                <label htmlFor="description">Description:</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={(e) => {
+                    handleChangeDialog(e);
+                  }}
+                />
+              </div>
+              {/* Image */}
+              <div className="flex gap-2 items-center">
+                <label htmlFor="img">Image:</label>
+                <input
+                  type="file"
+                  id="img"
+                  name="img"
+                  className="w-full"
+                  onChange={(e) => {
+                    handleChangeDialog(e);
+                  }}
+                />
+              </div>
+              {/* Tags */}
+              <div className="flex flex-col gap-2">
+                <div className="flex gap-2 items-center">
+                  <label htmlFor="tags">Tags:</label>
+                  <div className=" flex flex-row flex-wrap gap-1 overflow-hidden">
+                    {formData.tags.map((item, index) => {
+                      return (
+                        <div key={index} className="dark:bg-dark-tertiary bg-[#F4F5F5] px-1 rounded-sm overflow-hidden">
+                          <p className="text-[0.7rem] text-ellipsis overflow-hidden dark:text-dark-primary text-light-secondary">
+                            {item}
+                          </p>
+                          <IoClose
+                            color="red"
+                            className="cursor-pointer"
+                            onClick={() => {
+                              setFormData({ ...formData, tags: formData.tags.filter((i) => i != item) });
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="flex gap-2 items-center">
+                  <input type="text" id="tags" name="tags" placeholder="new tag" ref={addTagRef} />
+                  <button
+                    className="w-1/3 dark:bg-gray-300 p-2 rounded"
+                    type="button"
+                    onClick={() => {
+                      if (addTagRef.current && addTagRef.current.value) {
+                        setFormData({ ...formData, tags: [...formData.tags, addTagRef.current.value] });
+                        addTagRef.current.value = "";
+                      }
+                    }}
+                  >
+                    Add Tag
+                  </button>
+                </div>
+              </div>
+              {/* Link */}
+              <div className="flex gap-2 items-center">
+                <label htmlFor="link">Link:</label>
+                <input
+                  id="link"
+                  name="link"
+                  value={formData.link}
+                  onChange={(e) => {
+                    handleChangeDialog(e);
+                  }}
+                />
+              </div>
+              {/* Category */}
+              <div className="flex gap-2 items-center">
+                <label htmlFor="category">Category:</label>
+                <input
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={(e) => {
+                    handleChangeDialog(e);
+                  }}
+                />
+              </div>
+              {/* Submit Button */}
+              <button className="update">{dialogType === "add" ? "Add New" : "Apply Changes"}</button>
+            </form>
+          </dialog>
+        )}
       </div>
     </div>
   );

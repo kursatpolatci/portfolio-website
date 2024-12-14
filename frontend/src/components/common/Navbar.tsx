@@ -23,14 +23,14 @@ const Navbar = () => {
     navigate("/admin");
   };
   return (
-    <div className="flex items-center justify-between gap-32 pt-12 px-5 lg:px-0">
+    <div className="flex items-center justify-between max-md:px-6 max-md:text-sm py-12">
       <div className="flex gap-4">
         {Links.map((item, id) => {
           return (
             <Link
               to={item.to}
               key={id}
-              className={`relative group ${
+              className={`relative group font-medium ${
                 activeLink === item.name
                   ? "text-light-secondary dark:text-dark-secondary"
                   : "text-light-fifth dark:text-dark-fifth"
@@ -49,12 +49,8 @@ const Navbar = () => {
           );
         })}
       </div>
-      <div className="flex gap-3">
-        <MdDashboard
-          size={24}
-          onClick={handleClickAdmin}
-          className="dark:text-dark-secondary text-light-secondary cursor-pointer hover:scale-125 transition-all duration-300"
-        />
+      <div className="flex gap-4">
+        <MdDashboard onClick={handleClickAdmin} className="toggle-button" />
         <ThemeToggleButton />
       </div>
     </div>

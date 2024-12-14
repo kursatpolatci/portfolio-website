@@ -5,51 +5,55 @@ import { BACKEND_URL, IProjects } from "../../lib/types/types";
 
 const Projects = () => {
   const { data, isLoading } = useGetProjects();
-  if (isLoading) return <></>
+  if (isLoading) return <></>;
   return (
-    <div className="w-full py-12 flex flex-col gap-12">
-      {data?.projects.map((group: IProjects, index: number) => {
-        return (
-          <div key={index}>
-            <h1 className="text-light-secondary dark:text-dark-secondary font-semibold text-2xl">{group.category}</h1>
-            <div className="flex flex-row gap-12 pt-4">
-              {group?.projects.map((project, index) => {
-                return (
-                  <Link to={project.link} key={index}>
-                    <div className="flex flex-col max-w-[23rem] cursor-pointer dark:hover:bg-[#18181a] hover:bg-[#fafafa] rounded-t-xl rounded-b-xl overflow-hidden transition-colors duration-300">
-                      <div>
-                        <img src={`${BACKEND_URL}/uploads/${project.img}`} className="w-full h-auto"></img>
-                      </div>
-                      <div className="p-4">
-                        <h1 className="dark:text-dark-secondary text-light-secondary text-xl">{project.title}</h1>
-                        <p className="dark:text-dark-quaternary text-light-quaternary text-[0.8rem] pt-1">
-                          {project.description}
-                        </p>
-                        <div className="pt-2 flex flex-row flex-wrap gap-1">
-                          {project.tags?.map((item, index) => {
-                            return (
-                              <div
-                                key={index}
-                                className="dark:text-dark-tertiary dark:bg-dark-fifth text-light-tertiary bg-[#F4F5F5] inline-block p-1 rounded-xl"
-                              >
-                                <p className="text-[0.7rem]">{item}</p>
-                              </div>
-                            );
-                          })}
+    <div className="max-md:px-6">
+      <div className="flex flex-col gap-6">
+        {data?.projects.map((group: IProjects, index: number) => {
+          return (
+            <div key={index}>
+              <h1>{group.category}</h1>
+              <div className="grid grid-cols-2 max-xs:grid-cols-1 gap-12 max-md:gap-8 p-4">
+                {group?.projects.map((project, index) => {
+                  return (
+                    <Link to={project.link} key={index}>
+                      <div className="flex flex-col  cursor-pointer dark:hover:bg-[#18181a] hover:bg-[#fafafa] rounded-t-xl rounded-b-xl overflow-hidden transition-colors duration-300">
+                        <img
+                          src={`${BACKEND_URL}/uploads/${project.img}`}
+                          className="w-full h-auto"
+                          alt="project_image"
+                        />
+                        <div className="p-4 flex flex-col gap-1">
+                          <h1 className="text-xl max-md:text-lg">{project.title}</h1>
+                          <p className="dark:text-dark-quaternary text-light-quaternary text-[0.8rem]">
+                            {project.description}
+                          </p>
+                          <div className="flex flex-row flex-wrap gap-1">
+                            {project.tags?.map((item, index) => {
+                              return (
+                                <div
+                                  key={index}
+                                  className="dark:text-dark-tertiary dark:bg-dark-fifth text-light-tertiary bg-[#F4F5F5] inline-block px-[0.30rem] py-[0.15rem] rounded-xl"
+                                >
+                                  <p className="text-xs">{item}</p>
+                                </div>
+                              );
+                            })}
+                          </div>
+                          <div className="flex gap-2 pt-2">
+                            <FaGithub className="icon" />
+                            <FaLink className="icon" />
+                          </div>
                         </div>
-                        <div className="flex gap-2 pt-4">
-                          <FaGithub className="dark:text-dark-fifth text-light-fifth   size-5" />
-                          <FaLink className="dark:text-dark-fifth text-light-fifth  size-5" />
-                        </div>
                       </div>
-                    </div>
-                  </Link>
-                );
-              })}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };

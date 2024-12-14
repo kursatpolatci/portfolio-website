@@ -1,11 +1,8 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "./ThemeContext";
-import { HomePage, AdminPage } from "./pages/barrel";
-import { Navbar, Footer } from "./components/common";
-import { NavbarEdit } from "./components/admin";
+import { HomePage, AdminPage, LoginPage } from "./pages/barrel";
 import { useCheckAuth } from "./hooks/AuthHooks";
-import Login from "./components/admin/Login";
 
 function App() {
   const { data: authUser, isLoading } = useCheckAuth();
@@ -14,37 +11,13 @@ function App() {
     <ThemeProvider>
       <div className="max-w-3xl mx-auto">
         <Routes>
-          <Route path="/login" element={<Login />} />
           {["/", "/about", "/projects"]?.map((path) => (
-            <Route
-              key={path}
-              path={path}
-              element={
-                <>
-                  <Navbar />
-                  <HomePage path={path} />
-                  <Footer />
-                </>
-              }
-            />
+            <Route key={path} path={path} element={<HomePage path={path} />} />
           ))}
           {["/admin", "/admin-about", "/admin-projects"]?.map((path) => (
-            <Route
-              key={path}
-              path={path}
-              element={
-                authUser ? (
-                  <>
-                    <NavbarEdit />
-                    <AdminPage path={path} />
-                    <Footer />
-                  </>
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
+            <Route key={path} path={path} element={authUser ? <AdminPage path={path} /> : <Navigate to="/login" />} />
           ))}
+          <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

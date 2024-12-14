@@ -9,13 +9,13 @@ const ThemeToggleButton = () => {
     else if (theme === "light") setTheme("dark");
   };
   return (
-    <button onClick={() => handleChangeTheme()}>
+    <div onClick={() => handleChangeTheme()}>
       {theme === "dark" ? (
-        <MdLightMode color="white" size={24} className="hover:scale-125 transition-all duration-300" />
+        <MdLightMode className="toggle-button" />
       ) : (
-        <MdDarkMode color="black" size={24} className="hover:scale-125 transition-all duration-300" />
+        <MdDarkMode className="toggle-button" />
       )}
-    </button>
+    </div>
   );
 };
 

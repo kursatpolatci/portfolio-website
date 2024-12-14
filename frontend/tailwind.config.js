@@ -8,7 +8,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Space Grotesk"', 'sans-serif'], 
+        sans: ['"Space Grotesk"', 'sans-serif'],
+      },
+      screens: {
+        'xxs': '420px',
+        'xs': '520px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px'
       },
       colors: {
         dark: {

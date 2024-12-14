@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -14,4 +14,61 @@ body.dark {
 
 body:not(.dark) {
   @apply bg-light-primary;
+}
+
+input,
+textarea {
+  @apply rounded-sm focus:outline-none dark:bg-dark-fifth bg-[#eeeeee] dark:text-dark-tertiary text-light-tertiary dark:placeholder-dark-tertiary placeholder-light-tertiary placeholder:opacity-40 px-4 py-3 max-md:py-2 max-md:px-3 w-full;
+}
+
+button {
+  @apply rounded-sm dark:bg-dark-secondary bg-light-quaternary dark:text-dark-primary text-light-primary p-2 max-md:p-1 
+  w-full text-center;
+}
+
+button.update {
+  @apply bg-blue-400 text-white !important;
+}
+
+dialog {
+  @apply rounded-sm p-6 bg-dark-secondary shadow-2xl max-xs:mx-4;
+}
+
+dialog input,
+dialog textarea {
+  @apply bg-[#eeeeee] text-light-tertiary placeholder-light-tertiary placeholder:opacity-40 !important;
+}
+
+dialog h2 {
+  @apply text-lg font-semibold text-dark-primary text-center mb-4;
+}
+
+h1 {
+  @apply text-light-secondary dark:text-dark-secondary text-2xl max-md:text-xl;
+}
+
+p,
+span {
+  @apply text-light-tertiary dark:text-dark-tertiary text-base max-md:text-sm;
+}
+
+p.link,
+span.link {
+  @apply underline underline-offset-4 text-light-secondary dark:text-dark-secondary !important;
+}
+
+.icon {
+  @apply size-6 max-md:size-5 max-sm:size-4 hover:scale-125 transition text-light-quaternary dark:text-dark-quaternary;
+}
+
+.avatar {
+  @apply w-36 h-36 rounded-full object-cover transition hover:grayscale;
+}
+
+.toggle-button {
+  @apply dark:text-white text-black size-6 max-md:size-5 max-sm:size-4 hover:scale-125 transition-transform cursor-pointer;
+}
+
+.tag {
+  @apply dark:text-dark-tertiary dark:bg-dark-fifth text-light-tertiary bg-[#F4F5F5] px-1 rounded-xl;
 }

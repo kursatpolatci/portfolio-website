@@ -1,26 +1,28 @@
-import IntroEdit from "../components/admin/IntroEdit";
-import ProjectsEdit from "../components/admin/ProjectsEdit";
-import SkillsEdit from "../components/admin/SkillsEdit";
+import { IntroEdit, NavbarEdit, ProjectsEdit, SkillsEdit } from "../components/admin";
+import { Footer } from "../components/common";
 
-const AdminPage: React.FC<{path: string}> = ({ path }) => {
-  if (path === "/admin")
-    return (
-      <>
-        <IntroEdit />
-      </>
-    );
-  else if (path === "/admin-about")
-    return (
-      <>
-        <SkillsEdit />
-      </>
-    );
-  else if (path === "/admin-projects")
-    return (
-      <>
-        <ProjectsEdit />
-      </>
-    );
+const AdminPage: React.FC<{ path: string }> = ({ path }) => {
+  return (
+    <>
+      <NavbarEdit />
+      {path === "/admin" && (
+        <>
+          <IntroEdit />
+        </>
+      )}
+      {path === "/admin-about" && (
+        <>
+          <SkillsEdit />
+        </>
+      )}
+      {path === "/admin-projects" && (
+        <>
+          <ProjectsEdit />
+        </>
+      )}
+      <Footer />
+    </>
+  );
 };
 
 export default AdminPage;

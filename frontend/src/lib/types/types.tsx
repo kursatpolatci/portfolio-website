@@ -17,7 +17,7 @@ export interface IProject {
   img: string;
   tags: string[];
   link: string;
-  category: string
+  category: string;
 }
 
 export interface IProjects {

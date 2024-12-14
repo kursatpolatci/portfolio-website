@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const IntroEdit = () => {
   const { data } = useGetIntro();
-  const { mutateAsync } = useEditIntro();
+  const { mutateAsync: editIntro } = useEditIntro();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -15,8 +15,8 @@ const IntroEdit = () => {
     image: null as File | null,
     resume: null as File | null,
   });
-  const profileImgRef = useRef<HTMLInputElement | null>(null);
-  const resumeRef = useRef<HTMLInputElement | null>(null);
+  const profileImgRef = useRef<HTMLInputElement>(null);
+  const resumeRef = useRef<HTMLInputElement>(null);
 
   const [profileImgPreview, setProfileImgPreview] = useState<string | null>(null);
   const [resumePreview, setResumePreview] = useState<string | null>(null);
@@ -31,6 +31,7 @@ const IntroEdit = () => {
       });
     }
   }, [data]);
+  
   const handleClickUpload = (e: React.MouseEvent<HTMLButtonElement>, ref: React.RefObject<HTMLInputElement>): void => {
     e.preventDefault();
     ref.current?.click();
@@ -54,26 +55,25 @@ const IntroEdit = () => {
     e.preventDefault();
     try {
       const multiPartForm = new FormData();
+      console.log(formData)
       Object.entries(formData).forEach(([key, value]) => {
         if (value) multiPartForm.append(key, value);
       });
-      const res = await mutateAsync(multiPartForm);
-      console.log(res);
+      const res = await editIntro(multiPartForm);
+      console.log(`Result of editIntro: `, res);
     } catch (error: unknown) {
       console.log(errorMessage(error));
     }
   };
-
   return (
-    <div className="py-12">
-      <form onSubmit={handleSubmit}>
+    <div className="max-md:px-6">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         {/* Upload Image*/}
-        <div className="flex flex-col gap-3 pb-4 w-1/5">
+        <div className="flex flex-col gap-3">
           <img
             src={profileImgPreview ? `${profileImgPreview}` : `${BACKEND_URL}/uploads/${data?.intro.image}`}
-            className="w-32 h-32 rounded-full object-cover transition-all duration-300 hover:grayscale"
+            className="avatar"
           />
-
           <input
             type="file"
             ref={profileImgRef}
@@ -81,15 +81,12 @@ const IntroEdit = () => {
             hidden
             onChange={(e) => handleChangeUpload(e, setProfileImgPreview)}
           />
-          <button
-            className="dark:bg-dark-secondary bg-gray-300 p-1 rounded-sm w-full"
-            onClick={(e) => handleClickUpload(e, profileImgRef)}
-          >
+          <button onClick={(e) => handleClickUpload(e, profileImgRef)}>
             Upload Image
           </button>
         </div>
-        {/* Full Name and Bio*/}
-        <div className="flex flex-col gap-4 py-4">
+        {/* Name and Bio*/}
+        <div className="flex flex-col gap-3">
           <input
             name="name"
             placeholder="Full Name"
@@ -97,22 +94,18 @@ const IntroEdit = () => {
             onChange={(e) => {
               setFormData({ ...formData, name: e.target.value });
             }}
-            className="focus:outline-none w-full px-4 py-3 rounded-md dark:bg-dark-fifth dark:placeholder-dark-tertiary dark:text-dark-tertiary
-            bg-[#eeeeee] placeholder-light-tertiary text-light-tertiary placeholder:opacity-35"
           />
           <textarea
             name="bio"
-            placeholder="bio"
+            placeholder="Bio"
             value={formData.bio ?? ""}
             onChange={(e) => {
               setFormData({ ...formData, bio: e.target.value });
             }}
-            className="focus:outline-none w-full px-4 py-3 rounded-md dark:bg-dark-fifth dark:placeholder-dark-tertiary dark:text-dark-tertiary
-            bg-[#eeeeee] placeholder-light-tertiary text-light-tertiary placeholder:opacity-35"
           />
         </div>
         {/* Upload Resume*/}
-        <div className="flex flex-row gap-3 pb-4 ">
+        <div className="flex flex-row gap-3">
           <input
             type="file"
             name="resume"
@@ -120,23 +113,16 @@ const IntroEdit = () => {
             ref={resumeRef}
             onChange={(e) => handleChangeUpload(e, setResumePreview)}
           />
-          <button
-            className="dark:bg-dark-secondary bg-gray-300 p-1 rounded-sm w-full"
-            onClick={(e) => handleClickUpload(e, resumeRef)}
-          >
-            Upload Resume
-          </button>
+          <button onClick={(e) => handleClickUpload(e, resumeRef)}>Upload Resume</button>
           <Link
             target="_blank"
             to={resumePreview ? `${resumePreview}` : `${BACKEND_URL}/uploads/${data?.intro.resume}`}
-            className={`${resumePreview ? "text-red-500" : "dark:text-dark-secondary text-light-secondary"}  underline`}
           >
-            {data?.intro.resume}
+            <span className="link">{data?.intro.resume}</span>
           </Link>
         </div>
-        <button className="bg-blue-400 p-2 mt-5 rounded-sm dark:text-white" type="submit">
-          Update Intro
-        </button>
+        {/* Submit Button */}
+        <button className="update">Update Intro</button>
       </form>
     </div>
   );

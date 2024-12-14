@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { errorMessage } from "../../lib/utils/error";
-import { useLogin } from "../../hooks/AuthHooks";
+import { errorMessage } from "../lib/utils/error";
+import { useLogin } from "../hooks/AuthHooks";
 import { Link, useNavigate } from "react-router-dom";
+import { ThemeToggleButton } from "../components/common";
 
-const Login = () => {
+const LoginPage = () => {
   const { mutateAsync: login } = useLogin();
   const [formData, setFormData] = useState({
     username: "",
@@ -24,9 +25,12 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center h-screen text-center">
-      <div className="max-w-80">
-        <h1 className="text-white font-normal text-3xl">Kürşat Polatcı</h1>
+    <div className="h-screen flex justify-center items-center  text-center">
+      <div className="w-full max-w-80">
+        <div className="flex flex-col items-center justify-center gap-5">
+          <ThemeToggleButton />
+          <h1>Kürşat Polatcı </h1>
+        </div>
         <form className="flex flex-col gap-3 p-4" onSubmit={handleSubmitLogin}>
           <div>
             <input
@@ -35,7 +39,6 @@ const Login = () => {
               value={formData.username}
               placeholder="Username"
               onChange={handleChangeLogin}
-              className="rounded py-1 px-2 w-full"
             />
           </div>
           <div>
@@ -45,19 +48,16 @@ const Login = () => {
               value={formData.password}
               placeholder="Password"
               onChange={handleChangeLogin}
-              className="rounded py-1 px-2 w-full"
             />
           </div>
-          <button className="bg-blue-400 text-white rounded p-2 w-full" type="submit">
-            Login
-          </button>
+          <button>Login</button>
         </form>
-        <Link to="/" className="dark:text-dark-secondary underline underline-offset-2 text-sm font-extralight">
-          Back to home
+        <Link to="/">
+          <p className="link">Back to home</p>
         </Link>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default LoginPage;

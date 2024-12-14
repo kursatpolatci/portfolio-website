@@ -4,21 +4,21 @@ import { BACKEND_URL, ISkill } from "../../lib/types/types";
 const Skills = () => {
   const { data } = useGetSkills();
   return (
-    <div className="py-12">
-      <h1 className="text-light-secondary dark:text-dark-secondary text-2xl mb-6">Skills</h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4">
+    <div className="max-md:px-6">
+      <h1>Skills</h1>
+      <div className="grid grid-cols-3 max-lg:grid-cols-2 max-xxs:grid-cols-1 gap-y-4 p-4">
         {data?.skills.map((item: ISkill, index: number) => {
           return (
-            <div key={index} className="border-dark-fifth flex flex-row p-3 items-center justify-start gap-4">
+            <div key={index} className="flex flex-row p-3 items-center justify-start gap-4 max-md:gap-7">
               <div>
                 <img
                   src={`${BACKEND_URL}/uploads/${item.img}`}
                   alt={`photo`}
-                  className={`w-12 h-12 object-contain ${item.colorInvert ? "dark:invert" : ""}`}
+                  className={`w-11 max-md:w-10 object-cover ${item.colorInvert ? "dark:invert" : ""}`}
                 />
               </div>
               <div>
-                <p className="text-light-secondary dark:text-dark-tertiary">{item.name}</p>
+                <p>{item.name}</p>
               </div>
             </div>
           );
