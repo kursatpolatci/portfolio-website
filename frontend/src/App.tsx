@@ -3,24 +3,27 @@ import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "./ThemeContext";
 import { HomePage, AdminPage, LoginPage } from "./pages/barrel";
 import { useCheckAuth } from "./hooks/AuthHooks";
+import LoadingSpinner from "./components/common/LoadingSpinner";
 
 function App() {
   const { data: authUser, isLoading } = useCheckAuth();
 
-  if (isLoading) return <div className="dark:bg-dark-primary bg-light-primary" />;
   return (
     <ThemeProvider>
-      <div className="max-w-3xl mx-auto">
-        <Routes>
-          {["/", "/about", "/projects"]?.map((path) => (
-            <Route key={path} path={path} element={<HomePage path={path} />} />
-          ))}
-          {["/admin", "/admin-about", "/admin-projects"]?.map((path) => (
-            <Route key={path} path={path} element={authUser ? <AdminPage path={path} /> : <Navigate to="/login" />} />
-          ))}
-          <Route path="/login" element={authUser ? <Navigate to="/admin" replace /> : <LoginPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+      <div className="max-w-3xl min-h-screen mx-auto relative">
+        {isLoading && <LoadingSpinner />}
+        {!isLoading && (
+          <Routes>
+            {["/", "/about", "/projects"]?.map((path) => (
+              <Route key={path} path={path} element={<HomePage path={path} />} />
+            ))}
+            {["/admin", "/admin-about", "/admin-projects"]?.map((path) => (
+              <Route key={path} path={path} element={authUser ? <AdminPage path={path} /> : <Navigate to="/login" />} />
+            ))}
+            <Route path="/login" element={authUser ? <Navigate to="/admin" replace /> : <LoginPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        )}
       </div>
       <Toaster />
     </ThemeProvider>

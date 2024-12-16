@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useEditIntro, useGetIntro } from "../../hooks/IntroHooks";
-import { BACKEND_URL } from "../../lib/types/types";
+import { uploads } from "../../lib/types/types";
 import { datauri } from "../../lib/utils/datauri";
 import { errorMessage } from "../../lib/utils/error";
 import { Link } from "react-router-dom";
+import IntroEditSkeleton from "../skeletons/IntroEditSkeleton";
 
 const IntroEdit = () => {
-  const { data } = useGetIntro();
+  const { data, isLoading } = useGetIntro();
   const { mutateAsync: editIntro } = useEditIntro();
 
   const [formData, setFormData] = useState({
@@ -66,13 +67,14 @@ const IntroEdit = () => {
       console.log(errorMessage(error));
     }
   };
+  if (isLoading) return <IntroEditSkeleton />;
   return (
-    <div className="max-md:px-6">
+    <div>
       <form onSubmit={handleSubmit}>
         {/* Upload Image*/}
         <div className="flex flex-col gap-4">
           <img
-            src={profileImgPreview ? `${profileImgPreview}` : `${BACKEND_URL}/uploads/${data?.intro.image}`}
+            src={profileImgPreview ? `${profileImgPreview}` : `${uploads}/${data?.intro.image}`}
             className="avatar"
           />
           <input
@@ -112,10 +114,13 @@ const IntroEdit = () => {
             ref={resumeRef}
             onChange={(e) => handleChangeUpload(e, setResumePreview)}
           />
-          <button onClick={(e) => handleClickUpload(e, resumeRef)}>Upload Resume</button>
+          <button onClick={(e) => handleClickUpload(e, resumeRef)} className="w-5/6">
+            Upload Resume
+          </button>
           <Link
             target="_blank"
-            to={resumePreview ? `${resumePreview}` : `${BACKEND_URL}/uploads/${data?.intro.resume}`}
+            to={resumePreview ? `${resumePreview}` : `${uploads}/${data?.intro.resume}`}
+            className="w-1/6 text-center"
           >
             <span className="link">{data?.intro.resume}</span>
           </Link>

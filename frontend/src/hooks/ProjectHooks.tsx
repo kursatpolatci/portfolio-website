@@ -30,7 +30,7 @@ export const useDeleteProject = () => {
     },
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.setQueryData(["projects"], data);
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
     onError: (error: string) => {
       toast.error(error);
@@ -51,7 +51,7 @@ export const useEditProject = () => {
     },
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.setQueryData(["projects"], data);
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
     onError: (error: string) => {
       toast.error(error);
@@ -72,7 +72,7 @@ export const useAddProject = () => {
     },
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.setQueryData(["projects"], data);
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
     onError: (error: string) => {
       toast.error(error);

@@ -51,7 +51,7 @@ export const editSkill = async (req: Request, res: Response): Promise<void> => {
     }
 
     if (name) skill.name = name;
-    if (img) {
+    if (img && img !== skill.img) {
       const imgPath = await imageEditProcess(img, skill.img);
       skill.img = imgPath;
     }

@@ -4,23 +4,23 @@ import { IEmailFormData } from "../../lib/types/types";
 
 const Contact = () => {
   const [formData, setFormData] = useState<IEmailFormData>({ name: "", email: "", message: "" });
-  const { mutateAsync } = useSendEmail();
+  const { mutateAsync, isPending } = useSendEmail();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitContact = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       const res = await mutateAsync(formData);
-      console.log("Response in handleSubmit:", res);
+      console.log("Response in handleSubmitContact:", res);
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
-      console.error("Error in handleSubmit: ", error);
+      console.error("Error in handleSubmitContact: ", error);
     }
   };
   return (
-    <div className="max-md:px-6 pt-12">
-      <h1 className="pb-6">Contact Me</h1>
-      <div className="p-4">
-        <form onSubmit={(e) => handleSubmit(e)}>
+    <div>
+      <h1>Contact Me</h1>
+      <div className="px-4 py-6">
+        <form onSubmit={(e) => handleSubmitContact(e)}>
           <div>
             <input
               type="text"
@@ -47,7 +47,7 @@ const Contact = () => {
               onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
             />
           </div>
-          <button>Send Email</button>
+          <button>{!isPending ? "Send Message" : "Loading..."}</button>
         </form>
       </div>
     </div>

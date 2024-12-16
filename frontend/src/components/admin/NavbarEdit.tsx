@@ -7,8 +7,8 @@ import { TbLogout2 } from "react-icons/tb";
 
 const NavbarEdit = () => {
   const [activeLink, setActiveLink] = useState<string>("Intro");
-  const location = useLocation();
   const { mutateAsync: logout } = useLogout();
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const NavbarEdit = () => {
     }
   };
   return (
-    <div className="flex items-center justify-between max-md:px-6 max-md:text-sm py-12">
+    <div className="flex items-center justify-between max-md:text-sm pt-12">
       <div className="flex gap-4">
         {Links.map((item, id) => {
           return (

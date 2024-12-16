@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ThemeToggleButton } from "../components/common";
 
 const LoginPage = () => {
-  const { mutateAsync: login } = useLogin();
+  const { mutateAsync: login, isPending } = useLogin();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -18,8 +18,8 @@ const LoginPage = () => {
     try {
       e.preventDefault();
       const res = await login(formData);
+      console.log(`Result of handleSubmitLogin: `, res);
       navigate("/admin");
-      console.log(res);
     } catch (error: unknown) {
       errorMessage(error);
     }
@@ -31,7 +31,7 @@ const LoginPage = () => {
           <ThemeToggleButton />
           <h1>Kürşat Polatcı </h1>
         </div>
-        <form onSubmit={handleSubmitLogin}>
+        <form onSubmit={handleSubmitLogin} className="py-5">
           <div>
             <input
               type="text"
@@ -50,7 +50,7 @@ const LoginPage = () => {
               onChange={handleChangeLogin}
             />
           </div>
-          <button>Login</button>
+          <button>{isPending ? "Loading..." : "Login"}</button>
         </form>
         <Link to="/">
           <p className="link">Back to home</p>

@@ -30,7 +30,7 @@ export const useDeleteSkill = () => {
     },
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.setQueryData(["skills"], data);
+      queryClient.invalidateQueries({ queryKey: ["skills"] });
     },
     onError: (error: string) => {
       toast.error(error);
@@ -51,7 +51,7 @@ export const useEditSkill = () => {
     },
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.setQueryData(["skills"], data);
+      queryClient.invalidateQueries({ queryKey: ["skills"] });
     },
     onError: (error: string) => {
       toast.error(error);
@@ -72,7 +72,7 @@ export const useAddSkill = () => {
     },
     onSuccess: (data) => {
       toast.success(data.message);
-      queryClient.setQueryData(["skills"], data);
+      queryClient.invalidateQueries({ queryKey: ["skills"] });
     },
     onError: (error: string) => {
       toast.error(error);

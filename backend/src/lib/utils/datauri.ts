@@ -26,10 +26,8 @@ const imageDeleteProcess = (img: string): Promise<void> => {
     const imgPath = path.join(__dirname, "..", "..", "..", "uploads", img);
     if (fs.existsSync(imgPath)) {
       fs.unlinkSync(imgPath);
-      resolve();
-    } else {
-      reject(new CustomError(`Image not found`, 400));
     }
+    resolve();
   });
 };
 

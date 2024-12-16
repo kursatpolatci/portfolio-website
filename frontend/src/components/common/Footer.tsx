@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className="max-md:px-6 py-6 text-center text-light-quaternary dark:text-dark-quaternary max-md:text-sm">
+    <div className="text-light-quaternary dark:text-dark-quaternary max-md:text-sm absolute w-full bottom-0 left-0 py-3 text-center">
       © 2024 Kürşat Polatcı. All rights reserved.
     </div>
   );

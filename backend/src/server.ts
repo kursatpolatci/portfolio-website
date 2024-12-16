@@ -8,20 +8,25 @@ import { sendMessage } from "./email/emails";
 import { handleError } from "./lib/utils/error";
 import { authRoutes, introRoutes, projectRoutes, skillRoutes } from "./routes";
 
-dotenv.config({ path: path.resolve(__dirname, "../../.env") });
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const port = process.env.PORT;
 
 const app = express();
 
-app.use(express.json({ limit: "10mb" }));
-app.use(cookieParser());
+const allowedOrigins = ["http://localhost:5173", "https://kursatpolatci.com"];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) callback(null, true);
+      else callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );
+app.use(express.json({ limit: "10mb" }));
+app.use(cookieParser());
 
 app.use("/uploads", express.static(path.resolve(__dirname, "../uploads")));
 

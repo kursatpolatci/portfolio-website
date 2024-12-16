@@ -31,11 +31,11 @@ button.update {
 }
 
 form {
-  @apply flex flex-col gap-4
+  @apply flex flex-col gap-4;
 }
 
 dialog {
-  @apply rounded-sm p-6 bg-dark-secondary shadow-2xl max-xs:mx-4;
+  @apply rounded-sm p-6 bg-dark-secondary shadow-2xl shadow-black;
 }
 
 dialog input,
@@ -66,7 +66,7 @@ span.link {
 }
 
 .avatar {
-  @apply w-36 h-36 rounded-full object-cover transition hover:grayscale;
+  @apply w-36 h-36 rounded-full object-cover transition-all hover:grayscale duration-300;
 }
 
 .toggle-button {
@@ -74,5 +74,10 @@ span.link {
 }
 
 .tag {
-  @apply dark:text-dark-tertiary dark:bg-dark-fifth text-light-tertiary bg-[#F4F5F5] px-1 rounded-xl;
+  @apply dark:text-dark-tertiary dark:bg-dark-fifth text-light-tertiary bg-[#F4F5F5]
+  px-[0.30rem] py-[0.25rem] rounded-xl text-xs truncate;
+}
+
+.skill {
+  @apply w-14 max-md:w-16 aspect-square object-contain rounded-md;
 }

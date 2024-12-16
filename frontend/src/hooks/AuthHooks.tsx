@@ -16,7 +16,7 @@ export const useLogin = () => {
     },
     onSuccess: async (data) => {
       toast.success(data.message);
-      queryClient.setQueryData(["authUser"], data);
+      queryClient.invalidateQueries({queryKey: ["authUser"]});
     },
     onError: (error: string) => {
       toast.error(error);

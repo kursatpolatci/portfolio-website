@@ -23,9 +23,9 @@ const Navbar = () => {
     navigate("/admin");
   };
   return (
-    <div className="flex items-center justify-between max-md:px-6 max-md:text-sm py-12">
+    <div className="flex items-center justify-between pt-12">
       <div className="flex gap-4">
-        {Links.map((item, id) => {
+        {Links?.map((item, id) => {
           return (
             <Link
               to={item.to}
