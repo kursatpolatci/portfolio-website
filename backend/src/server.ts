@@ -16,7 +16,6 @@ const app = express();
 
 const corsOptions = {
   origin: process.env.CORS_ORIGIN || "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
 
@@ -24,7 +23,7 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
-app.use("/uploads", express.static(path.resolve(__dirname, "../uploads")));
+app.use("/uploads", express.static(path.resolve(__dirname, "./uploads")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/intro", introRoutes);
