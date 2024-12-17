@@ -15,7 +15,7 @@ const port = process.env.PORT;
 const app = express();
 
 const corsOptions = {
-  origin: ["https://kursatpolatci.com", "https://www.kursatpolatci.com"],
+  origin: process.env.CORS_ORIGIN || "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
