@@ -1,15 +1,20 @@
 import multer from "multer";
 import path from "path";
+import fs from "fs";
+
+const uploadsDir = path.join(__dirname, "../../uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    if (file.mimetype === "application/pdf" || file.mimetype.startsWith("image/"))
-      cb(null, path.join(__dirname, "../../../uploads"));
+    if (file.mimetype === "application/pdf" || file.mimetype.startsWith("image/")) cb(null, uploadsDir);
     else cb(new Error("Invalid file type"), "");
   },
   filename: (req, file, cb) => {
-    if (file.mimetype === "application/pdf" && file.fieldname === "resume") cb(null, 'resume.pdf');
-    else if (file.mimetype.startsWith("image/") && file.fieldname === "image") cb(null, 'profile.jpg');
+    if (file.mimetype === "application/pdf" && file.fieldname === "resume") cb(null, "resume.pdf");
+    else if (file.mimetype.startsWith("image/") && file.fieldname === "image") cb(null, "profile.jpg");
     else cb(new Error(`Unsupported file type`), "");
   },
 });

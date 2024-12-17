@@ -14,7 +14,7 @@ const port = process.env.PORT;
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:5173", "https://kursatpolatci.com"];
+const allowedOrigins = ["http://localhost:5173", "https://www.kursatpolatci.com", "https://kursatpolatci.com"];
 
 app.use(
   cors({
