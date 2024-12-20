@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Response } from 'express';
 
 export class CustomError extends Error {
   statusCode: number;
@@ -10,13 +10,13 @@ export class CustomError extends Error {
   }
 }
 
-export const handleResponseError = (error: unknown, res: Response): void => {
+export const handleErrorResponse = (error: unknown, res: Response): void => {
   if (error instanceof CustomError) res.status(error.statusCode).json({ success: false, message: error.message });
   else if (error instanceof Error) res.status(500).json({ success: false, message: error.message });
   else res.status(500).json({ success: false, message: error });
 };
 
-export const handleError = (error: unknown): void => {
+export const handleErrorLogging = (error: unknown): void => {
   if (error instanceof CustomError) console.log(`CustomError: `, error.message);
   else if (error instanceof Error) console.log(`Error: `, error.message);
   else console.log(error);

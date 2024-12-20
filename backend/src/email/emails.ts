@@ -1,17 +1,17 @@
-import { Request, Response } from "express";
-import { transporter } from "./email.config";
-import { handleResponseError } from "../lib/utils/error";
+import { Request, Response } from 'express';
+import { transporter } from './email.config';
+import { handleErrorResponse } from '../lib/utils/error';
 
 export const sendMessage = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, email, message } = req.body;
 
     if (!name || !email || !message) {
-      res.status(400).json({ success: false, message: "All fields are required" });
+      res.status(400).json({ success: false, message: 'All fields are required' });
       return;
     }
     if (!process.env.MAIL_ADDRESS || !process.env.MAIL_PASSWORD) {
-      res.status(400).json({ success: false, message: "Mail address and password are required" });
+      res.status(400).json({ success: false, message: 'Mail address and password are required' });
       return;
     }
     const mailOptions = {
@@ -23,8 +23,8 @@ export const sendMessage = async (req: Request, res: Response): Promise<void> =>
 
     await transporter.sendMail(mailOptions);
 
-    res.status(200).json({ success: true, message: "Email sent successfully" });
+    res.status(200).json({ success: true, message: 'Email sent successfully' });
   } catch (error: unknown) {
-    handleResponseError(error, res);
+    handleErrorResponse(error, res);
   }
 };

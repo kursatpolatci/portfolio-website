@@ -1,4 +1,5 @@
-import mongoose, { Document, Model } from "mongoose";
+import mongoose, { Document, Model, Schema } from 'mongoose';
+import { handleErrorLogging } from '../lib/utils/error';
 
 interface IIntro extends Document {
   image: string;
@@ -11,29 +12,22 @@ interface IIntroModel extends Model<IIntro> {
   ensureSingleDocument: () => Promise<IIntro>;
 }
 
-const introSchema = new mongoose.Schema<IIntro>({
-  image: { type: String, required: true },
-  name: { type: String, required: true },
-  bio: { type: String, required: true },
-  resume: { type: String, required: true },
+const introSchema = new Schema<IIntro>({
+  name: { type: String, default: 'Default' },
+  bio: { type: String, default: 'Default' },
+  image: { type: String, default: '' },
+  resume: { type: String, default: '' },
 });
 
-const defaultData: Partial<IIntro> = {
-  image: "profile.jpg",
-  name: "Kürşat Polatcı",
-  bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  resume: "resume.pdf",
-};
-
-introSchema.statics.ensureSingleDocument = async function (this: Model<IIntro>): Promise<void> {
+introSchema.statics.ensureSingleDocument = async function (this: Model<IIntro>): Promise<IIntro> {
   try {
     const existingDoc = await this.findOne({});
-    if (!existingDoc) {
-      await this.create(defaultData);
-    }
+    if (existingDoc) return existingDoc;
+    return await this.create({});
   } catch (error) {
+    handleErrorLogging(error);
     throw error;
   }
 };
 
-export default mongoose.model<IIntro, IIntroModel>("Intro", introSchema);
+export default mongoose.model<IIntro, IIntroModel>('Intro', introSchema);

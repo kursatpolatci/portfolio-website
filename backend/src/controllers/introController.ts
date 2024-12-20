@@ -1,40 +1,37 @@
-import { Request, Response } from "express";
-import Intro from "../models/introModel";
-import { handleResponseError } from "../lib/utils/error";
+import { Request, Response } from 'express';
+import Intro from '../models/introModel';
+import { handleErrorResponse } from '../lib/utils/error';
+import { deleteFileFromCloudinary } from '../lib/utils/cloudinary';
 
 export const getIntro = async (req: Request, res: Response): Promise<void> => {
   try {
-    const intro = await Intro.findOne({});
-
-    if (!intro) {
-      await Intro.ensureSingleDocument();
-      const defaultIntro = await Intro.findOne({});
-      res.status(200).json({ success: true, defaultIntro });
-      return;
-    }
+    const intro = await Intro.ensureSingleDocument();
     res.status(200).json({ success: true, intro });
   } catch (error: unknown) {
-    handleResponseError(error, res);
+    handleErrorResponse(error, res);
   }
 };
 
 export const editIntro = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, bio } = req.body;
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
 
-    const intro = await Intro.findOne({});
-    if (!intro) {
-      res.status(404).json({ success: false, message: "Intro not found" });
-      return;
-    }
-
+    const intro = await Intro.ensureSingleDocument();
     if (name) intro.name = name;
     if (bio) intro.bio = bio;
+    if (files['image']) {
+      await deleteFileFromCloudinary(intro.image);
+      intro.image = files['image'][0].path;
+    }
+    if (files['resume']) {
+      await deleteFileFromCloudinary(intro.resume);
+      intro.resume = files['resume'][0].path;
+    }
     await intro.save();
 
-    res.status(200).json({ success: true, message: "Intro updated successfully", intro });
+    res.status(200).json({ success: true, message: 'Intro updated successfully', intro });
   } catch (error: unknown) {
-    console.log(error);
-    handleResponseError(error, res);
+    handleErrorResponse(error, res);
   }
 };

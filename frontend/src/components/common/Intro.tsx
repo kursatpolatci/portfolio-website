@@ -1,17 +1,17 @@
-import { Link } from "react-router-dom";
-import { useGetIntro } from "../../hooks/IntroHooks";
-import { uploads } from "../../lib/types/types";
-import IntroSkeleton from "../skeletons/IntroSkeleton";
-import { IconType } from "react-icons";
-import { FaGithub, FaHackerrank, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+import { useGetIntro } from '../../hooks/IntroHooks';
+import { uploads } from '../../lib/types/types';
+import IntroSkeleton from '../skeletons/IntroSkeleton';
+import { IconType } from 'react-icons';
+import { FaGithub, FaHackerrank, FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 const Intro = () => {
   const { data, isLoading } = useGetIntro();
   const Icons: { Icon: IconType; to: string }[] = [
-    { Icon: FaGithub, to: "https://github.com/kursatpolatci" },
-    { Icon: FaHackerrank, to: "https://www.hackerrank.com/profile/kursatpolatci" },
-    { Icon: FaInstagram, to: "https://www.instagram.com/kursatpolatci/" },
-    { Icon: FaLinkedin, to: "https://www.linkedin.com/in/kursatpolatci/" },
+    { Icon: FaGithub, to: 'https://github.com/kursatpolatci' },
+    { Icon: FaHackerrank, to: 'https://www.hackerrank.com/profile/kursatpolatci' },
+    { Icon: FaInstagram, to: 'https://www.instagram.com/kursatpolatci/' },
+    { Icon: FaLinkedin, to: 'https://www.linkedin.com/in/kursatpolatci/' },
   ];
   if (isLoading) return <IntroSkeleton />;
   return (
