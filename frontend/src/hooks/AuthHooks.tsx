@@ -18,7 +18,7 @@ export const useLogin = (): UseMutationResult<IDefaultResponse, IErrorResponse, 
     },
     onSuccess: async (data: IDefaultResponse) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ['authUser'] });
+      await queryClient.invalidateQueries({ queryKey: ['authUser'] });
     },
     onError: (error: IErrorResponse) => {
       toast.error(error);
@@ -37,7 +37,7 @@ export const useLogout = (): UseMutationResult<IDefaultResponse, IErrorResponse,
         throw errorResponse(error);
       }
     },
-    onSuccess: async (data: IDefaultResponse) => {
+    onSuccess: (data: IDefaultResponse) => {
       toast.success(data.message);
       queryClient.setQueryData(['authUser'], null);
     },
@@ -52,7 +52,7 @@ export const useCheckAuth = (): UseQueryResult<IDefaultResponse, IErrorResponse>
     queryKey: ['authUser'],
     queryFn: async (): Promise<IDefaultResponse> => {
       try {
-        const res = await axiosInstance.get(`/auth/check-auth`);
+        const res = await axiosInstance.get(`/auth/me`);
         return res.data;
       } catch (error: unknown) {
         throw errorResponse(error);

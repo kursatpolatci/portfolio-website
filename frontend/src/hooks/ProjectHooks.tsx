@@ -29,9 +29,9 @@ export const useDeleteProject = (): UseMutationResult<IDefaultResponse, IErrorRe
         throw errorResponse(error);
       }
     },
-    onSuccess: (data: IDefaultResponse) => {
+    onSuccess: async (data: IDefaultResponse) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      await queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
     onError: (error: IErrorResponse) => {
       toast.error(error);
@@ -50,9 +50,9 @@ export const useEditProject = (): UseMutationResult<IEditProject, IErrorResponse
         throw errorResponse(error);
       }
     },
-    onSuccess: (data: IEditProject) => {
+    onSuccess: async (data: IEditProject) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      await queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
     onError: (error: IErrorResponse) => {
       toast.error(error);
@@ -71,9 +71,9 @@ export const useAddProject = (): UseMutationResult<IPostProject, IErrorResponse,
         throw errorResponse(error);
       }
     },
-    onSuccess: (data: IPostProject) => {
+    onSuccess: async (data: IPostProject) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      await queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
     onError: (error: IErrorResponse) => {
       toast.error(error);
@@ -92,9 +92,9 @@ export const useDeleteAllProjects = (): UseMutationResult<IDefaultResponse, IErr
         throw errorResponse(error);
       }
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      await queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
     onError: (error: string) => {
       toast.error(error);

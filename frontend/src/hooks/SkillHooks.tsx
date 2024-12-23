@@ -29,9 +29,9 @@ export const useDeleteSkill = (): UseMutationResult<IDefaultResponse, IErrorResp
         throw errorResponse(error);
       }
     },
-    onSuccess: (data: IDefaultResponse) => {
+    onSuccess: async (data: IDefaultResponse) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ['skills'] });
+      await queryClient.invalidateQueries({ queryKey: ['skills'] });
     },
     onError: (error: IErrorResponse) => {
       toast.error(error);
@@ -50,9 +50,9 @@ export const useEditSkill = (): UseMutationResult<IEditSkill, IErrorResponse, Fo
         throw errorResponse(error);
       }
     },
-    onSuccess: (data: IEditSkill) => {
+    onSuccess: async (data: IEditSkill) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ['skills'] });
+      await queryClient.invalidateQueries({ queryKey: ['skills'] });
     },
     onError: (error: IErrorResponse) => {
       toast.error(error);
@@ -71,9 +71,9 @@ export const useAddSkill = (): UseMutationResult<IPostIntro, IErrorResponse, For
         throw errorResponse(error);
       }
     },
-    onSuccess: (data: IPostIntro) => {
+    onSuccess: async (data: IPostIntro) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ['skills'] });
+      await queryClient.invalidateQueries({ queryKey: ['skills'] });
     },
     onError: (error: IErrorResponse) => {
       toast.error(error);
@@ -92,9 +92,9 @@ export const useDeleteAllSkills = (): UseMutationResult<IDefaultResponse, IError
         throw errorResponse(error);
       }
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast.success(data.message);
-      queryClient.invalidateQueries({ queryKey: ['skills'] });
+      await queryClient.invalidateQueries({ queryKey: ['skills'] });
     },
     onError: (error: string) => {
       toast.error(error);
