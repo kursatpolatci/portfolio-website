@@ -1,38 +1,38 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ThemeToggleButton } from "../common/index";
-import { useLogout } from "../../hooks/AuthHooks";
-import { GoHome } from "react-icons/go";
-import { TbLogout2 } from "react-icons/tb";
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ThemeToggleButton } from '../common/index';
+import { useLogout } from '../../hooks/AuthHooks';
+import { GoHome } from 'react-icons/go';
+import { TbLogout2 } from 'react-icons/tb';
+import { errorMessage } from '../../lib/utils/error';
+
+const Links = [
+  { to: '/admin', name: 'Intro' },
+  { to: '/admin-about', name: 'About' },
+  { to: '/admin-projects', name: 'Projects' },
+];
 
 const NavbarEdit = () => {
-  const [activeLink, setActiveLink] = useState<string>("Intro");
+  const [activeLink, setActiveLink] = useState<string>('Intro');
   const { mutateAsync: logout } = useLogout();
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (location.pathname === "/admin") setActiveLink("Intro");
-    else if (location.pathname === "/admin-about") setActiveLink("About");
-    else if (location.pathname === "/admin-projects") setActiveLink("Projects");
+    const currentLink = Links.find((link) => location.pathname === link.to);
+    setActiveLink(currentLink?.name ?? '');
   }, [location]);
 
-  const Links: { to: string; name: string }[] = [
-    { to: "/admin", name: "Intro" },
-    { to: "/admin-about", name: "About" },
-    { to: "/admin-projects", name: "Projects" },
-  ];
   const handleLogout = async (): Promise<void> => {
     try {
-      const res = await logout();
-      console.log(res);
-      navigate("/");
+      await logout();
+      navigate('/');
     } catch (error: unknown) {
-      console.error(`Èrror in handleLogout: `, error);
+      errorMessage(error);
     }
   };
   return (
-    <div className="flex items-center justify-between max-md:text-sm pt-12">
+    <div className="flex items-center justify-between pt-12">
       <div className="flex gap-4">
         {Links.map((item, id) => {
           return (
@@ -41,8 +41,8 @@ const NavbarEdit = () => {
               key={id}
               className={`relative group font-medium ${
                 activeLink === item.name
-                  ? "text-light-secondary dark:text-dark-secondary"
-                  : "text-light-fifth dark:text-dark-fifth"
+                  ? 'text-light-secondary dark:text-dark-secondary'
+                  : 'text-light-fifth dark:text-dark-fifth'
               }`}
               onClick={() => setActiveLink(item.name)}
             >
@@ -50,22 +50,17 @@ const NavbarEdit = () => {
               <span
                 className={` absolute left-0 bottom-0 w-0 h-[1px] ${
                   activeLink === item.name
-                    ? "bg-light-secondary dark:bg-dark-secondary"
-                    : "bg-light-fifth dark:bg-dark-fifth"
+                    ? 'bg-light-secondary dark:bg-dark-secondary'
+                    : 'bg-light-fifth dark:bg-dark-fifth'
                 } transition-all duration-300 group-hover:w-full`}
               />
             </Link>
           );
         })}
       </div>
-      <div className="flex gap-4 items-center justify-center">
-        <GoHome
-          onClick={() => {
-            navigate("/");
-          }}
-          className="toggle-button"
-        />
-        <TbLogout2 onClick={handleLogout} className="toggle-button" />
+      <div className="flex gap-4">
+        <GoHome onClick={() => navigate('/')} className="toggle" />
+        <TbLogout2 onClick={handleLogout} className="toggle" />
         <ThemeToggleButton />
       </div>
     </div>

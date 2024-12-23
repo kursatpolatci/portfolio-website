@@ -16,11 +16,11 @@ export const addSkill = async (req: Request, res: Response): Promise<void> => {
   const file = req.file as Express.Multer.File;
   try {
     const { name, colorInvert } = req.body;
-    if (!name || !file || !colorInvert) {
+    if (!name || !file) {
       res.status(404).json({ success: false, message: 'You need to fill in the required fields' });
       return;
     }
-
+    console.log(colorInvert);
     const newSkill = new Skill({
       name: name,
       image: file.path,

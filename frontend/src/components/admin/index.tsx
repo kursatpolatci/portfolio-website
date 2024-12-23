@@ -1,5 +1,6 @@
-export { default as IntroEdit } from "./IntroEdit";
-export { default as Login } from "../../pages/LoginPage";
-export { default as NavbarEdit } from "./NavbarEdit";
-export { default as ProjectsEdit } from "./ProjectsEdit";
-export { default as SkillsEdit } from "./SkillsEdit";
+export { default as IntroEdit } from './IntroEdit';
+export { default as NavbarEdit } from './NavbarEdit';
+export { default as ProjectDialog } from './ProjectDialog';
+export { default as ProjectsEdit } from './ProjectsEdit';
+export { default as SkillDialog } from './SkillDialog';
+export { default as SkillsEdit } from './SkillsEdit';

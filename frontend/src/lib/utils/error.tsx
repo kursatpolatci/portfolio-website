@@ -1,9 +1,14 @@
-import { AxiosError } from "axios";
+import { AxiosError } from 'axios';
 
-const errorMessage = (error: unknown): string => {
+const errorResponse = (error: unknown): string => {
   if (error instanceof AxiosError) return error.response?.data.message;
   else if (error instanceof Error) return error.message;
-  else return "An unknown error occurred";
+  else return 'An unknown error occurred';
 };
 
-export { errorMessage };
+const errorMessage = (error: unknown): void => {
+  if (typeof error === 'string') console.error(`Error: `, error);
+  else console.error(`Unexpected error: `, error);
+};
+
+export { errorResponse, errorMessage };

@@ -13,10 +13,10 @@ interface IIntroModel extends Model<IIntro> {
 }
 
 const introSchema = new Schema<IIntro>({
-  name: { type: String, default: 'Default' },
-  bio: { type: String, default: 'Default' },
-  image: { type: String, default: '' },
-  resume: { type: String, default: '' },
+  name: { type: String, default: 'Kürşat Polatcı' },
+  bio: { type: String },
+  image: { type: String },
+  resume: { type: String },
 });
 
 introSchema.statics.ensureSingleDocument = async function (this: Model<IIntro>): Promise<IIntro> {

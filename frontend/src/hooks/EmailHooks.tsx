@@ -1,22 +1,24 @@
-import toast from "react-hot-toast";
-import { useMutation } from "@tanstack/react-query";
-import { axiosInstance, IEmailFormData } from "../lib/types/types";
-import { errorMessage } from "../lib/utils/error";
+import toast from 'react-hot-toast';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import { axiosInstance } from '../lib/types/definations';
+import { errorResponse } from '../lib/utils/error';
+import { IDefaultResponse, IErrorResponse } from '../lib/types/response';
+import { IEmailFormData } from '../lib/types/formdata';
 
-export const useSendEmail = () => {
+export const useSendEmail = (): UseMutationResult<IDefaultResponse, IErrorResponse, IEmailFormData> => {
   return useMutation({
-    mutationFn: async (formData: IEmailFormData) => {
+    mutationFn: async (formData: IEmailFormData): Promise<IDefaultResponse> => {
       try {
         const res = await axiosInstance.post(`/contact`, formData);
         return res.data;
       } catch (error: unknown) {
-        throw errorMessage(error);
+        throw errorResponse(error);
       }
     },
-    onSuccess: (data) => {
+    onSuccess: (data: IDefaultResponse) => {
       toast.success(data.message);
     },
-    onError: (error: string) => {
+    onError: (error: IErrorResponse) => {
       toast.error(error);
     },
   });

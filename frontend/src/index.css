@@ -1,9 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Theme */
 body {
   @apply font-sans font-medium;
 }
@@ -16,24 +17,47 @@ body:not(.dark) {
   @apply bg-light-primary;
 }
 
-input,
-textarea {
-  @apply rounded-sm focus:outline-none dark:bg-dark-fifth bg-[#eeeeee] dark:text-dark-tertiary text-light-tertiary dark:placeholder-dark-tertiary placeholder-light-tertiary placeholder:opacity-40 px-4 py-3 max-md:py-2 max-md:px-3 w-full;
+/* Text */
+h1 {
+  @apply text-light-secondary dark:text-dark-secondary text-2xl max-md:text-xl;
 }
 
-button {
-  @apply rounded-sm dark:bg-dark-secondary bg-light-quaternary dark:text-dark-primary text-light-primary p-2 max-md:p-1 
-  w-full text-center;
+p {
+  @apply text-light-tertiary dark:text-dark-tertiary text-base max-md:text-sm;
 }
 
-button.update {
-  @apply bg-blue-400 text-white !important;
+.link {
+  @apply underline underline-offset-4 text-light-secondary dark:text-dark-secondary cursor-pointer w-fit;
 }
 
+/* Form */
 form {
   @apply flex flex-col gap-4;
 }
 
+form input,
+form textarea {
+  @apply rounded-sm focus:outline-none dark:bg-dark-fifth bg-[#eeeeee] dark:text-dark-tertiary text-light-tertiary dark:placeholder-dark-tertiary placeholder-light-tertiary placeholder:opacity-40 px-4 py-3 max-md:py-2 max-md:px-3 w-full;
+}
+
+/* Buttons */
+button {
+  @apply rounded-sm dark:bg-dark-secondary bg-light-quaternary dark:text-dark-primary text-light-primary p-2 max-md:p-1 w-full text-center;
+}
+
+.update {
+  @apply bg-blue-400 text-white !important;
+}
+
+.delete {
+  @apply bg-red-400 text-white !important;
+}
+
+.toggle {
+  @apply dark:text-white text-black size-6 max-md:size-5 hover:scale-125 transition-transform cursor-pointer;
+}
+
+/* Dialog */
 dialog {
   @apply rounded-sm p-6 bg-dark-secondary shadow-2xl shadow-black;
 }
@@ -47,37 +71,41 @@ dialog h2 {
   @apply text-lg font-semibold text-dark-primary text-center mb-4;
 }
 
-h1 {
-  @apply text-light-secondary dark:text-dark-secondary text-2xl max-md:text-xl;
+.footer {
+  @apply text-light-quaternary dark:text-dark-quaternary max-md:text-sm absolute left-0 bottom-0 text-center w-full py-3;
 }
 
-p,
-span {
-  @apply text-light-tertiary dark:text-dark-tertiary text-base max-md:text-sm;
+.intro-avatar {
+  @apply w-36 aspect-square rounded-full object-cover transition-all hover:grayscale duration-300;
 }
 
-p.link,
-span.link {
-  @apply underline underline-offset-4 text-light-secondary dark:text-dark-secondary !important;
-}
-
-.icon {
+.intro-icon {
   @apply size-6 max-md:size-5 max-sm:size-4 hover:scale-125 transition text-light-quaternary dark:text-dark-quaternary;
 }
 
-.avatar {
+.project-avatar {
+  @apply w-full aspect-video object-cover;
+}
+
+.project.tag {
+  @apply dark:text-dark-tertiary dark:bg-dark-fifth text-light-tertiary bg-[#F4F5F5] px-[0.30rem] py-[0.25rem] rounded-xl text-xs truncate;
+}
+.project-icon {
+  @apply dark:text-dark-fifth text-light-fifth size-5;
+}
+
+.skill-avatar {
+  @apply w-14 aspect-square object-cover;
+}
+
+.intro-edit-avatar {
   @apply w-32 aspect-square rounded-full object-cover transition-all hover:grayscale duration-300;
 }
 
-.toggle-button {
-  @apply dark:text-white text-black size-6 max-md:size-5 hover:scale-125 transition-transform cursor-pointer;
+.skill-edit-avatar {
+  @apply h-11 max-md:h-10 aspect-square;
 }
 
-.tag {
-  @apply dark:text-dark-tertiary dark:bg-dark-fifth text-light-tertiary bg-[#F4F5F5]
-  px-[0.30rem] py-[0.25rem] rounded-xl text-xs truncate;
-}
-
-.skill {
-  @apply w-14 max-md:w-16 aspect-square object-contain rounded-md;
+.dialog-avatar {
+  @apply h-11 max-md:h-10;
 }
