@@ -37,10 +37,10 @@ const ProjectCard = ({ project, handleClickDialog, handleDeleteProject }: Projec
         <a href={project.link} rel="noreferrer noopener" className="link truncate">
           {project.link}
         </a>
-        <div className="flex flex-row flex-wrap gap-12">
+        <div className="flex flex-row flex-wrap">
           {project.tags?.map((item) => {
             return (
-              <div key={item} className="project-tag">
+              <div key={item} className="tag">
                 {item}
               </div>
             );
