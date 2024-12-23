@@ -46,7 +46,9 @@ const ProjectDialog: React.FC<IProjectDialogProps> = ({
       e.preventDefault();
       const multiPartForm = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
-        if (value != undefined) multiPartForm.append(key, value);
+        if (Array.isArray(value)) {
+          value.forEach((item) => multiPartForm.append(key, item));
+        } else if (value !== undefined) multiPartForm.append(key, value);
       });
       if (dialogType === 'add') await addProject(multiPartForm);
       else if (dialogType === 'edit') await editProject(multiPartForm);
@@ -56,6 +58,7 @@ const ProjectDialog: React.FC<IProjectDialogProps> = ({
       errorMessage(error);
     }
   };
+  console.log(formData);
   return (
     <>
       {isDialogOpen && (
@@ -102,13 +105,14 @@ const ProjectDialog: React.FC<IProjectDialogProps> = ({
                   <div className=" flex flex-row flex-wrap gap-1 overflow-hidden">
                     {formData.tags.map((item, index) => {
                       return (
-                        <div key={index} className="dark:bg-dark-tertiary bg-[#F4F5F5] px-1 rounded-sm overflow-hidden">
-                          <p className="text-[0.7rem] text-ellipsis overflow-hidden dark:text-dark-primary text-light-secondary">
-                            {item}
-                          </p>
+                        <div
+                          key={index}
+                          className="dark:bg-dark-tertiary bg-[#F4F5F5] px-1 rounded-sm truncate text-center"
+                        >
+                          {item}
                           <IoClose
                             color="red"
-                            className="cursor-pointer"
+                            className="cursor-pointer w-full"
                             onClick={() => setFormData({ ...formData, tags: formData.tags.filter((i) => i != item) })}
                           />
                         </div>

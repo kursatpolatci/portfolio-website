@@ -35,6 +35,7 @@ const ProjectCard = ({ project }: { project: IProject }) => {
 
 const Projects = () => {
   const { data, isLoading } = useGetProjects();
+  console.log(data)
 
   if (isLoading) return <ProjectsSkeleton count={4} />;
   return (

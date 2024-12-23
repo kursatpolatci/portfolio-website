@@ -37,13 +37,10 @@ const ProjectCard = ({ project, handleClickDialog, handleDeleteProject }: Projec
         <a href={project.link} rel="noreferrer noopener" className="link truncate">
           {project.link}
         </a>
-        <div className="flex flex-row gap-1">
-          {project.tags.map((item, index) => {
+        <div className="flex flex-row flex-wrap gap-12">
+          {project.tags.map((item) => {
             return (
-              <div
-                key={index}
-                className="dark:text-dark-tertiary dark:bg-dark-fifth text-light-tertiary bg-[#F4F5F5] px-[0.30rem] py-[0.25rem] rounded-xl text-xs truncate"
-              >
+              <div key={item} className="project-tag">
                 {item}
               </div>
             );
@@ -68,7 +65,6 @@ const ProjectsEdit = () => {
     link: '',
     category: '',
   });
-
   const handleClickDialog = (type: dialogType, item?: IProject) => {
     if (type === 'add')
       setFormData({ _id: '', title: '', description: '', image: null, tags: [], link: '', category: '' });
