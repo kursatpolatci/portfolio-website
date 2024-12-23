@@ -6,6 +6,7 @@ interface IIntro extends Document {
   name: string;
   bio: string;
   resume: string;
+  [key: string]: any;
 }
 
 interface IIntroModel extends Model<IIntro> {
@@ -13,7 +14,7 @@ interface IIntroModel extends Model<IIntro> {
 }
 
 const introSchema = new Schema<IIntro>({
-  name: { type: String, default: 'Kürşat Polatcı' },
+  name: { type: String },
   bio: { type: String },
   image: { type: String },
   resume: { type: String },

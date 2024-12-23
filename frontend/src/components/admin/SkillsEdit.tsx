@@ -61,7 +61,7 @@ const SkillsEdit = () => {
         {data?.skills.map((item) => {
           return (
             <div key={item._id} className="flex flex-row p-3 items-center justify-start gap-4 relative">
-              <img src={item.image} className={`skill-edit-avatar ${item.colorInvert ? 'dark:invert' : ''}`} />
+              <img src={item.image} className={`skill-avatar ${item.colorInvert ? 'dark:invert' : ''}`} />
               <p>{item.name}</p>
               <div className="flex flex-col justify-between absolute top-0 right-0 h-full py-2">
                 <MdModeEdit

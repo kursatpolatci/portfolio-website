@@ -2,12 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { MdDashboard } from 'react-icons/md';
 import { ThemeToggleButton } from './index';
-
-const Links = [
-  { to: '/', name: 'Home' },
-  { to: '/about', name: 'About' },
-  { to: '/projects', name: 'Projects' },
-];
+import { Links } from '../../constants/data';
 
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState<string>('Home');

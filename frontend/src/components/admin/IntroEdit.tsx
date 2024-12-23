@@ -56,7 +56,7 @@ const IntroEdit = () => {
     try {
       const multiPartForm = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
-        if (value) multiPartForm.append(key, value);
+        if (value != null) multiPartForm.append(key, value);
       });
       await editIntro(multiPartForm);
     } catch (error: unknown) {
@@ -68,7 +68,7 @@ const IntroEdit = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="flex flex-col gap-4">
-        <img src={profileImgPreview || data?.intro.image} className="intro-edit-avatar" />
+        <img src={profileImgPreview || data?.intro.image} className="intro-avatar" />
         <input
           type="file"
           ref={profileImgRef}

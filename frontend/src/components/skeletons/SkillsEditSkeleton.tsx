@@ -3,7 +3,7 @@ import ImageSkeleton from './ImageSkeleton';
 const SkillEditSkeleton = () => {
   return (
     <div className="flex flex-row p-3 rounded-md items-center justify-start gap-4 relative">
-      <ImageSkeleton avatar="skill-edit-avatar" />
+      <ImageSkeleton avatar="skill-avatar" />
       <div className="h-6 max-md:h-5 w-28 rounded-md bg-[#eeeeee] dark:bg-dark-fifth" />
       <div className="flex flex-col justify-between absolute top-0 right-0 h-full py-2">
         <div className="h-6 w-6 rounded-md bg-[#eeeeee] dark:bg-dark-fifth" />

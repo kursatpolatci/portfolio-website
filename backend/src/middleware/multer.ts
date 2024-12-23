@@ -9,7 +9,7 @@ const storage = new CloudinaryStorage({
     return {
       folder: 'portfolio-website',
       resource_type: 'auto',
-      public_id: `${uuidv4()}-${file.originalname.split('.')[0]}`,
+      public_id: `${uuidv4()}`,
     };
   },
 });

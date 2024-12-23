@@ -1,24 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
-import { handleErrorResponse } from '../lib/utils/error';
+import { CustomError, handleErrorResponse } from '../lib/utils/error';
 import jwt from 'jsonwebtoken';
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const token = req.cookies.token;
-    if (!token) {
-      res.status(401).json({ success: false, message: 'Unauthorized: No token provided' });
-      return;
-    }
+    if (!token) throw new CustomError('Unauthorized: No token provided', 401);
     const secret = process.env.JWT_SECRET;
-    if (!secret) {
-      res.status(401).json({ success: false, message: 'Unauthorized: No JWT_SECRET provided' });
-      return;
-    }
+    if (!secret) throw new CustomError('Unauthorized: No JWT_SECRET provided', 401);
     const decoded = jwt.verify(token, secret);
-    if (!decoded) {
-      res.status(401).json({ success: false, message: 'Unauthorized: Invalid Token' });
-      return;
-    }
+    if (!decoded) throw new CustomError('Unauthorized: Invalid Token', 401);
     next();
   } catch (error) {
     handleErrorResponse(error, res);

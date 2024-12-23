@@ -1,15 +1,8 @@
 import { useGetIntro } from '../../hooks/IntroHooks';
 import { useState } from 'react';
-import { FaGithub, FaHackerrank, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import { IntroSkeleton } from '../skeletons';
 import { ResumeViewer } from './index';
-
-const Icons = [
-  { Icon: FaGithub, to: 'https://github.com/kursatpolatci' },
-  { Icon: FaHackerrank, to: 'https://www.hackerrank.com/profile/kursatpolatci' },
-  { Icon: FaInstagram, to: 'https://www.instagram.com/kursatpolatci/' },
-  { Icon: FaLinkedin, to: 'https://www.linkedin.com/in/kursatpolatci/' },
-];
+import { Icons } from '../../constants/data';
 
 const SocialIcons = () => {
   return (
@@ -27,22 +20,21 @@ const SocialIcons = () => {
 
 const Intro = () => {
   const { data, isLoading } = useGetIntro();
-  const intro = data?.intro;
   const [showPdf, setShowPdf] = useState(false);
 
   if (isLoading) return <IntroSkeleton />;
   return (
     <div>
-      <img src={intro?.image} className="intro-avatar" />
-      <div className="flex flex-col gap-5 pt-5">
-        <h1>{intro?.name}</h1>
-        <p>{intro?.bio}</p>
+      <img src={data?.intro?.image} className="intro-avatar" alt='avatar'/>
+      <div className="flex flex-col gap-3 pt-5">
+        <h1>{data?.intro?.name}</h1>
+        <p>{data?.intro?.bio}</p>
         <SocialIcons />
         <span className="link" onClick={() => setShowPdf((prev) => !prev)}>
           View Resume
         </span>
+        <ResumeViewer setShowPdf={setShowPdf} showPdf={showPdf} resume={data?.intro?.resume} />
       </div>
-      <ResumeViewer setShowPdf={setShowPdf} showPdf={showPdf} resume={intro?.resume} />
     </div>
   );
 };

@@ -17,7 +17,7 @@ const ProjectCard = ({ project, handleClickDialog, handleDeleteProject }: Projec
   return (
     <div className="flex max-md:flex-col items-center gap-12 max-md:gap-3">
       <div className="flex max-md:flex-col w-1/3 max-md:w-full gap-2">
-        <img src={project.image} className="w-full aspect-video object-cover max-md:h-auto rounded-md" />
+        <img src={project.image} className="project-edit-avatar" />
         <div className="flex flex-col max-md:flex-row items-center justify-center gap-2">
           <MdModeEdit
             className="text-blue-500 cursor-pointer"
@@ -38,7 +38,7 @@ const ProjectCard = ({ project, handleClickDialog, handleDeleteProject }: Projec
           {project.link}
         </a>
         <div className="flex flex-row flex-wrap gap-12">
-          {project.tags.map((item) => {
+          {project.tags?.map((item) => {
             return (
               <div key={item} className="project-tag">
                 {item}
@@ -53,7 +53,7 @@ const ProjectCard = ({ project, handleClickDialog, handleDeleteProject }: Projec
 const ProjectsEdit = () => {
   const { data, isLoading } = useGetProjects();
   const { mutateAsync: deleteProject } = useDeleteProject();
-  const { mutateAsync: deleteAllProjects } = useDeleteAllProjects();
+  const { mutateAsync: deleteAllProjects, isPending: isDeletingAll } = useDeleteAllProjects();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<dialogType>('add');
   const [formData, setFormData] = useState<IProjectFormData>({
@@ -102,8 +102,8 @@ const ProjectsEdit = () => {
             setFormData={setFormData}
             dialogType={dialogType}
           />
-          <button className="w-1/5 delete" onClick={handleDeleteAll}>
-            Delete All
+          <button className="w-1/5 delete" disabled={isDeletingAll} onClick={handleDeleteAll}>
+            {!isDeletingAll ? 'Delete All' : 'Loading...'}
           </button>
         </div>
       </div>

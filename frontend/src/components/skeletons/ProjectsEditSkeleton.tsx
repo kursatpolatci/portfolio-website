@@ -2,9 +2,9 @@ import ImageSkeleton from './ImageSkeleton';
 
 const ProjectEditSkeleton = () => {
   return (
-    <div className="flex max-md:flex-col rounded-mds-center gap-12 max-md:gap-3">
+    <div className="flex max-md:flex-col items-center gap-12 max-md:gap-3">
       <div className="flex max-md:flex-col w-1/3 max-md:w-full gap-2">
-        <ImageSkeleton avatar="project-avatar" />
+        <ImageSkeleton avatar="project-edit-avatar" />
         <div className="flex flex-col max-md:flex-row items-center justify-center gap-2">
           <div className="w-6 aspect-square max-md:h-7 bg-[#eeeeee] dark:bg-dark-fifth rounded-md" />
           <div className="w-6 aspect-square max-md:h-7 bg-[#eeeeee] dark:bg-dark-fifth rounded-md" />

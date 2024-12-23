@@ -14,6 +14,8 @@ export const deleteFileFromCloudinary = async (filePath: string): Promise<void> 
       const result = await cloudinary.uploader.destroy(publicId);
       if (result.result === 'not found') console.log(`File with public_id: ${publicId} not found on Cloudinary.`);
       else console.log(`File with public_id: ${publicId} deleted successfully.`);
+    } else {
+      console.log(`File Path not found`);
     }
   } catch (error: unknown) {
     handleErrorLogging(error);

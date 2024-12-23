@@ -3,7 +3,7 @@ import ImageSkeleton from './ImageSkeleton';
 const IntroEditSkeleton = () => {
   return (
     <div className="animate-pulse flex flex-col gap-4">
-      <ImageSkeleton avatar="intro-edit-avatar" />
+      <ImageSkeleton avatar="intro-avatar" />
       <div className="w-full h-10 max-md:h-8 bg-[#eeeeee] dark:bg-dark-fifth rounded-md" />
       <div className="w-full h-12 max-md:h-10 bg-[#eeeeee] dark:bg-dark-fifth rounded-md" />
       <div className="w-full h-[72px] max-md:h-16 bg-[#eeeeee] dark:bg-dark-fifth rounded-md" />

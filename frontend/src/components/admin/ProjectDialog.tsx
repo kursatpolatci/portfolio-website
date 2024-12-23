@@ -48,7 +48,7 @@ const ProjectDialog: React.FC<IProjectDialogProps> = ({
       Object.entries(formData).forEach(([key, value]) => {
         if (Array.isArray(value)) {
           value.forEach((item) => multiPartForm.append(key, item));
-        } else if (value !== undefined) multiPartForm.append(key, value);
+        } else if (value != null) multiPartForm.append(key, value);
       });
       if (dialogType === 'add') await addProject(multiPartForm);
       else if (dialogType === 'edit') await editProject(multiPartForm);
@@ -58,7 +58,6 @@ const ProjectDialog: React.FC<IProjectDialogProps> = ({
       errorMessage(error);
     }
   };
-  console.log(formData);
   return (
     <>
       {isDialogOpen && (

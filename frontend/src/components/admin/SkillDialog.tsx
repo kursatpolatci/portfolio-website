@@ -45,7 +45,7 @@ const SkillDialog: React.FC<ISkillDialogProps> = ({
       e.preventDefault();
       const multiPartForm = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
-        if (value != undefined) multiPartForm.append(key, value);
+        if (value != null) multiPartForm.append(key, value);
       });
       if (dialogType === 'add') await addSkill(multiPartForm);
       else if (dialogType === 'edit') await editSkill(multiPartForm);
