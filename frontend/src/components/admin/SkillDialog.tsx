@@ -12,6 +12,8 @@ interface ISkillDialogProps {
   dialogType: dialogType;
   setFormData: React.Dispatch<React.SetStateAction<ISkillFormData>>;
   formData: ISkillFormData;
+  currentPhoto: string;
+  setCurrentPhoto: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SkillDialog: React.FC<ISkillDialogProps> = ({
@@ -20,6 +22,8 @@ const SkillDialog: React.FC<ISkillDialogProps> = ({
   dialogType,
   setFormData,
   formData,
+  currentPhoto,
+  setCurrentPhoto,
 }) => {
   const { mutateAsync: addSkill, isPending: isAdding } = useAddSkill();
   const { mutateAsync: editSkill, isPending: isEditing } = useEditSkill();
@@ -67,6 +71,7 @@ const SkillDialog: React.FC<ISkillDialogProps> = ({
               onClick={() => {
                 setIsDialogOpen(false);
                 setImagePreview('');
+                setCurrentPhoto('');
               }}
             />
             <h2>{dialogType === 'add' ? 'Add Skill' : 'Edit Skill'}</h2>
@@ -85,7 +90,7 @@ const SkillDialog: React.FC<ISkillDialogProps> = ({
               <div className="flex gap-2 items-center">
                 <label htmlFor="image">Image:</label>
                 <input type="file" id="image" name="image" onChange={handleChangeDialog} />
-                {imagePreview && <img src={imagePreview} className="dialog-avatar" />}
+                {(imagePreview || currentPhoto) && <img src={imagePreview || currentPhoto} className="dialog-avatar" />}
               </div>
               <div className="flex gap-2 items-center">
                 <label htmlFor="colorInvert">Color Invert:</label>

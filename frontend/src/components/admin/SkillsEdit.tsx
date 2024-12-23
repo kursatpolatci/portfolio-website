@@ -14,11 +14,15 @@ const SkillsEdit = () => {
   const { mutateAsync: deleteAllSkills, isPending: isDeletingAll } = useDeleteAllSkills();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<dialogType>('add');
+  const [imagePreview, setImagePreview] = useState('');
   const [formData, setFormData] = useState<ISkillFormData>({ _id: '', name: '', image: null, colorInvert: false });
 
   const handleClickDialog = (type: dialogType, item?: ISkill) => {
     if (type === 'add') setFormData({ _id: '', name: '', image: null, colorInvert: false });
-    else if (type === 'edit' && item) setFormData({ ...item, image: null });
+    else if (type === 'edit' && item) {
+      setFormData({ ...item, image: null });
+      setImagePreview(item.image);
+    }
     setDialogType(type);
     setIsDialogOpen((prev) => !prev);
   };
@@ -51,6 +55,8 @@ const SkillsEdit = () => {
             setIsDialogOpen={setIsDialogOpen}
             isDialogOpen={isDialogOpen}
             dialogType={dialogType}
+            currentPhoto={imagePreview}
+            setCurrentPhoto={setImagePreview}
           />
           <button className="w-1/5 delete" disabled={isDeletingAll} onClick={handleDeleteAllSkills}>
             {!isDeletingAll ? 'Delete All' : 'Loading...'}

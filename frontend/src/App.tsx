@@ -4,7 +4,6 @@ import { ThemeProvider } from './ThemeContext';
 import { HomePage, AdminPage, LoginPage } from './pages/barrel';
 import { useCheckAuth } from './hooks/AuthHooks';
 import { LoadingSpinner } from './components/common/index';
-import { Helmet } from 'react-helmet';
 
 function App() {
   const { data: authUser, isLoading } = useCheckAuth();
@@ -26,7 +25,6 @@ function App() {
         )}
       </div>
       <Toaster />
-      <Helmet />
     </ThemeProvider>
   );
 }

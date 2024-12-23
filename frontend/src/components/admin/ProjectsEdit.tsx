@@ -56,6 +56,7 @@ const ProjectsEdit = () => {
   const { mutateAsync: deleteAllProjects, isPending: isDeletingAll } = useDeleteAllProjects();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<dialogType>('add');
+  const [imagePreview, setImagePreview] = useState('');
   const [formData, setFormData] = useState<IProjectFormData>({
     _id: '',
     title: '',
@@ -68,7 +69,10 @@ const ProjectsEdit = () => {
   const handleClickDialog = (type: dialogType, item?: IProject) => {
     if (type === 'add')
       setFormData({ _id: '', title: '', description: '', image: null, tags: [], link: '', category: '' });
-    else if (type === 'edit' && item) setFormData({ ...item, image: null });
+    else if (type === 'edit' && item) {
+      setFormData({ ...item, image: null });
+      setImagePreview(item.image);
+    }
     setDialogType(type);
     setIsDialogOpen((prev) => !prev);
   };
@@ -101,6 +105,8 @@ const ProjectsEdit = () => {
             formData={formData}
             setFormData={setFormData}
             dialogType={dialogType}
+            currentPhoto={imagePreview}
+            setCurrentPhoto={setImagePreview}
           />
           <button className="w-1/5 delete" disabled={isDeletingAll} onClick={handleDeleteAll}>
             {!isDeletingAll ? 'Delete All' : 'Loading...'}
@@ -110,7 +116,7 @@ const ProjectsEdit = () => {
       <div className="flex flex-col gap-6 p-4">
         {data?.projects.map((group) => {
           return (
-            <div key={group.category}>
+            <div key={group.category + Math.random()}>
               <h1>{group.category}</h1>
               <div className="flex flex-col gap-6 p-4 max-md:gap-16">
                 {group.projects.map((project) => {

@@ -102,3 +102,7 @@ dialog h2 {
 .project-edit-avatar {
   @apply w-64 max-md:w-full aspect-video object-cover rounded-t-md;
 }
+
+.dialog-avatar {
+  @apply h-24 aspect-square object-contain
+}

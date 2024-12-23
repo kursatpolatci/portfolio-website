@@ -13,6 +13,8 @@ interface IProjectDialogProps {
   dialogType: dialogType;
   setFormData: React.Dispatch<React.SetStateAction<IProjectFormData>>;
   formData: IProjectFormData;
+  currentPhoto: string;
+  setCurrentPhoto: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const ProjectDialog: React.FC<IProjectDialogProps> = ({
@@ -21,6 +23,8 @@ const ProjectDialog: React.FC<IProjectDialogProps> = ({
   dialogType,
   setFormData,
   formData,
+  currentPhoto,
+  setCurrentPhoto,
 }) => {
   const { mutateAsync: editProject, isPending: isEditing } = useEditProject();
   const { mutateAsync: addProject, isPending: isAdding } = useAddProject();
@@ -70,6 +74,7 @@ const ProjectDialog: React.FC<IProjectDialogProps> = ({
               onClick={() => {
                 setIsDialogOpen(false);
                 setImagePreview('');
+                setCurrentPhoto('');
               }}
             />
             <h2>{dialogType === 'add' ? 'Add Project' : 'Edit Project'}</h2>
@@ -96,7 +101,7 @@ const ProjectDialog: React.FC<IProjectDialogProps> = ({
               <div className="flex gap-2 items-center">
                 <label htmlFor="image">Image:</label>
                 <input type="file" id="image" name="image" className="w-full" onChange={(e) => handleChangeDialog(e)} />
-                {imagePreview && <img src={imagePreview} className="dialog-avatar" />}
+                {(imagePreview || currentPhoto) && <img src={imagePreview || currentPhoto} className="dialog-avatar" />}
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex gap-2 items-center">
