@@ -6,7 +6,7 @@ const SkillCard = ({ skill }: { skill: ISkill }) => {
   return (
     <div key={skill._id} className="flex flex-col gap-2 items-center justify-center">
       <img src={skill.image} className={`skill-avatar ${skill.colorInvert ? 'dark:invert' : ''}`} alt={skill._id} />
-      <p>{skill.name}</p>
+      <p className="text-center">{skill.name}</p>
     </div>
   );
 };
@@ -18,7 +18,7 @@ const Skills = () => {
   return (
     <div>
       <h1>Skills</h1>
-      <div className="grid grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 gap-12 py-4">
+      <div className="grid grid-cols-5 max-md:grid-cols-4 gap-12 px-4 py-6">
         {data?.skills.map((item) => {
           return <SkillCard skill={item} />;
         })}

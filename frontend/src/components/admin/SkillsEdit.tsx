@@ -7,10 +7,11 @@ import { errorMessage } from '../../lib/utils/error';
 import { SkillsEditSkeleton } from '../skeletons';
 import { SkillDialog } from './index';
 import { ISkill } from '../../lib/types/response';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const SkillsEdit = () => {
   const { data, isLoading } = useGetSkills();
-  const { mutateAsync: deleteSkill } = useDeleteSkill();
+  const { mutateAsync: deleteSkill, isPending: isDeleting } = useDeleteSkill();
   const { mutateAsync: deleteAllSkills, isPending: isDeletingAll } = useDeleteAllSkills();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<dialogType>('add');
@@ -75,11 +76,15 @@ const SkillsEdit = () => {
                   size={24}
                   onClick={() => handleClickDialog('edit', item)}
                 />
-                <MdDelete
-                  className="text-red-500 cursor-pointer"
-                  size={24}
-                  onClick={() => handleDeleteSkill(item._id)}
-                />
+                {!isDeleting ? (
+                  <MdDelete
+                    className="text-red-500 cursor-pointer"
+                    size={24}
+                    onClick={() => handleDeleteSkill(item._id)}
+                  />
+                ) : (
+                  <AiOutlineLoading3Quarters size={24} className="text-red-500 animate-spin" />
+                )}
               </div>
             </div>
           );

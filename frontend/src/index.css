@@ -42,7 +42,7 @@ form textarea {
 
 /* Buttons */
 button {
-  @apply rounded-sm dark:bg-dark-secondary bg-light-quaternary dark:text-dark-primary text-light-primary p-2 max-md:p-1 w-full text-center;
+  @apply rounded-sm dark:bg-dark-secondary bg-light-quaternary dark:text-dark-primary text-light-primary p-2 max-md:p-1 w-full text-center max-md:text-sm text-nowrap;
 }
 
 .update {
@@ -88,7 +88,7 @@ dialog h2 {
 }
 
 .skill-avatar {
-  @apply w-14 aspect-square object-contain rounded-md;
+  @apply w-12 aspect-square object-contain rounded-md;
 }
 
 .intro-icon {
@@ -104,5 +104,5 @@ dialog h2 {
 }
 
 .dialog-avatar {
-  @apply h-24 aspect-square object-contain
+  @apply h-24 aspect-square object-contain;
 }

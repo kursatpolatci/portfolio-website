@@ -7,15 +7,17 @@ import { errorMessage } from '../../lib/utils/error';
 import { ProjectsEditSkeleton } from '../skeletons';
 import { IProject } from '../../lib/types/response';
 import ProjectDialog from './ProjectDialog';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 interface ProjectCardProps {
   project: IProject;
   handleClickDialog: (type: dialogType, item?: IProject) => void;
   handleDeleteProject: (id: string) => Promise<void>;
+  isPending: boolean;
 }
-const ProjectCard = ({ project, handleClickDialog, handleDeleteProject }: ProjectCardProps) => {
+const ProjectCard = ({ project, handleClickDialog, handleDeleteProject, isPending }: ProjectCardProps) => {
   return (
-    <div className="flex max-md:flex-col items-center gap-12 max-md:gap-3">
+    <div className="flex max-md:flex-col items-center gap-12 max-md:gap-3 max-md:text-center">
       <div className="flex max-md:flex-col w-1/3 max-md:w-full gap-2">
         <img src={project.image} className="project-edit-avatar" />
         <div className="flex flex-col max-md:flex-row items-center justify-center gap-2">
@@ -24,20 +26,21 @@ const ProjectCard = ({ project, handleClickDialog, handleDeleteProject }: Projec
             size={24}
             onClick={() => handleClickDialog('edit', project)}
           />
-          <MdDelete
-            className="text-red-500 cursor-pointer"
-            size={24}
-            onClick={() => handleDeleteProject(project._id)}
-          />
+          {!isPending ? (
+            <MdDelete
+              className="text-red-500 cursor-pointer"
+              size={24}
+              onClick={() => handleDeleteProject(project._id)}
+            />
+          ) : (
+            <AiOutlineLoading3Quarters size={24} className="text-red-500 animate-spin" />
+          )}
         </div>
       </div>
-      <div className="flex flex-col w-2/3 max-md:w-full gap-1 max-md:gap-2">
+      <div className="flex flex-col w-2/3 max-md:w-full gap-1 max-md:gap-2 truncate">
         <p>{project.title}</p>
         <p className="truncate">{project.description}</p>
-        <a href={project.link} rel="noreferrer noopener" className="link truncate">
-          {project.link}
-        </a>
-        <div className="flex flex-row flex-wrap">
+        <div className="flex flex-row flex-wrap gap-1 max-md:justify-center">
           {project.tags?.map((item) => {
             return (
               <div key={item} className="tag">
@@ -52,7 +55,7 @@ const ProjectCard = ({ project, handleClickDialog, handleDeleteProject }: Projec
 };
 const ProjectsEdit = () => {
   const { data, isLoading } = useGetProjects();
-  const { mutateAsync: deleteProject } = useDeleteProject();
+  const { mutateAsync: deleteProject, isPending: isDeleting } = useDeleteProject();
   const { mutateAsync: deleteAllProjects, isPending: isDeletingAll } = useDeleteAllProjects();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<dialogType>('add');
@@ -125,6 +128,7 @@ const ProjectsEdit = () => {
                       project={project}
                       handleClickDialog={handleClickDialog}
                       handleDeleteProject={handleDeleteProject}
+                      isPending={isDeleting}
                     />
                   );
                 })}

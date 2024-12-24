@@ -1,7 +1,7 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './ThemeContext';
-import { HomePage, AdminPage, LoginPage } from './pages/barrel';
+import { HomePage, AdminPage, LoginPage } from './pages';
 import { useCheckAuth } from './hooks/AuthHooks';
 import { LoadingSpinner } from './components/common/index';
 

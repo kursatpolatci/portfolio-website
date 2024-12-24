@@ -2,7 +2,7 @@ import { useGetIntro } from '../../hooks/IntroHooks';
 import { useState } from 'react';
 import { IntroSkeleton } from '../skeletons';
 import { ResumeViewer } from './index';
-import { Icons } from '../../constants/data';
+import { Icons } from '../../lib/constants/data';
 
 const SocialIcons = () => {
   return (
@@ -25,8 +25,8 @@ const Intro = () => {
   if (isLoading) return <IntroSkeleton />;
   return (
     <div>
-      <img src={data?.intro?.image} className="intro-avatar" alt='avatar'/>
-      <div className="flex flex-col gap-3 pt-5">
+      <img src={data?.intro?.image} className="intro-avatar" alt="avatar" />
+      <div className="flex flex-col gap-3 pt-6">
         <h1>{data?.intro?.name}</h1>
         <p>{data?.intro?.bio}</p>
         <SocialIcons />
