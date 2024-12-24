@@ -1,13 +1,14 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import path from 'path';
 import cors from 'cors';
 import { connectDb } from './db/connectDb';
 import { sendMessage } from './email/emails';
 import { handleErrorLogging } from './lib/utils/error';
 import { authRoutes, introRoutes, projectRoutes, skillRoutes } from './routes';
 
-dotenv.config();
+dotenv.config({path: path.resolve(__dirname, '../../.env')});
 
 const port = process.env.PORT;
 

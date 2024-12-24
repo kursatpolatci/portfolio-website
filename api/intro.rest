@@ -1,0 +1,22 @@
+@base_url=http://localhost:5000/api/intro
+### GET INTRO
+GET {{base_url}}
+
+### EDIT INTRO
+PUT {{base_url}}/edit
+Content-Type: multipart/form-data; boundary=boundary123
+
+--boundary123
+Content-Disposition: form-data; name="name"
+
+Kürşat Polatcı
+--boundary123
+Content-Disposition: form-data; name="bio"
+
+I am a 4th year computer engineering student. I know C, C#, Unity, React, Node.js, MongoDB, Next.js, Javascript, HTML, CSS, Tailwind CSS. I generally did Web Development and Game Development.
+--boundary123
+Content-Disposition: form-data; name="image"; filename="image.jpg"
+Content-Type: image/jpeg
+
+< image_path
+--boundary123--

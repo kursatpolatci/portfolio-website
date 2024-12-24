@@ -1,0 +1,19 @@
+@base_url=http://localhost:5000/api/auth
+
+### CHECK-AUTH
+GET {{base_url}}/me
+
+### LOGIN
+
+POST {{base_url}}/login
+Content-Type: application/json
+
+{
+    "username": "",
+    "password": ""
+}
+
+### LOGOUT
+
+POST {{base_url}}/logout
+Content-Type: application/json
