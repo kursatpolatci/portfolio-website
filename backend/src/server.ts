@@ -8,7 +8,7 @@ import { sendMessage } from './email/emails';
 import { handleErrorLogging } from './lib/utils/error';
 import { authRoutes, introRoutes, projectRoutes, skillRoutes } from './routes';
 
-dotenv.config({path: path.resolve(__dirname, '../../.env')});
+dotenv.config();
 
 const port = process.env.PORT;
 
