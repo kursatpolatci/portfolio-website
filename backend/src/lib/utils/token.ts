@@ -12,7 +12,7 @@ export const generateTokenAndSetCookie = async (res: Response, userId: string): 
       maxAge: 15 * 24 * 60 * 60 * 1000,
       httpOnly: true,
       sameSite: 'none',
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
     });
   } catch (error: unknown) {
     handleErrorLogging(error);
